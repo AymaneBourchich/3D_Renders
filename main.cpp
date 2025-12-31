@@ -72,6 +72,30 @@ inline void uploadVerts(GLuint vao, GLuint vbo, const float *verts, size_t vertB
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
+inline void uploadVertsTextured(
+    GLuint vao,
+    GLuint vbo,
+    const float *verts,
+    size_t vertBytes)
+{
+    glBindVertexArray(vao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertBytes, verts, GL_STATIC_DRAW);
+
+    // position (location = 0)
+    glVertexAttribPointer(
+        0, 3, GL_FLOAT, GL_FALSE,
+        5 * sizeof(float),
+        (void *)0);
+    glEnableVertexAttribArray(0);
+
+    // uv (location = 1)
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    glBindVertexArray(0);
+}
 
 // ------------------------------------------------------------
 // Main
@@ -116,8 +140,14 @@ int main()
     glGenBuffers(1, &eyeVBO);
     uploadVerts(eyeVAO, eyeVBO, Verts::Triangle, sizeof(Verts::Triangle));
 
-    GLuint program = createProgram("shaders/person.vert", "shaders/person.frag");
+    GLuint floorVAO = 0, floorVBO = 0;
+    glGenVertexArrays(1, &floorVAO);
+    glGenBuffers(1, &floorVBO);
+    uploadVertsTextured(floorVAO, floorVBO, Verts::Floor, sizeof(Verts::Floor));
+    GLuint floorTex = loadTexture("floor.jpg");
 
+    GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
+    GLuint geoProgram = createProgram("shaders/geo.vert", "shaders/geo.frag");
     double lastTime = glfwGetTime();
 
     while (!glfwWindowShouldClose(window))
@@ -135,36 +165,36 @@ int main()
         glm::vec3 fwd = camForward(gCam);
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
-        glUseProgram(program);
+        
 
         float t = (float)now;
 
         const float rotSpeedDeg = 60.0f;
         float angleDeg = rotSpeedDeg * (float)now;
-        
-        glm::mat4 root = initModel();
-        translate(root, 0.0f, 0.0f, -1.0f);
-        rotate(root, 0.0f, 1.0f, 0.0f, angleDeg); // rotate whole entity
+        glUseProgram(texProgram);
 
+        glm::mat4 root = initModel();
+        // translate(root, 0.0f, 0.0f, -1.0f);
+        // rotate(root, 0.0f, 1.0f, 0.0f, angleDeg); // rotate whole entity
+        // scaleFully(root, 10);
+        drawMesh(texProgram, floorVAO, 6, proj, view, root, Color::Red);
+        glUseProgram(geoProgram);
         glm::mat4 body = root;
         translate(body, 0, 0.2, -1);
         scaleX(body, 3);
         scaleY(body, 2);
-        drawMesh(program, cubeVAO, Verts::CubeVertexCount, proj, view, body, Color::Black);
+        drawMesh(geoProgram, cubeVAO, Verts::CubeVertexCount, proj, view, body, Color::Black);
 
         glm::mat4 eye1 = root;
         translate(eye1, 0, 0, -0.45);
         scaleFully(eye1, 2.0);
-        drawMesh(program, eyeVAO, Verts::TriangleVertexCount, proj, view, eye1, Color::Red);
+        drawMesh(geoProgram, eyeVAO, Verts::TriangleVertexCount, proj, view, eye1, Color::Red);
 
         glm::mat4 eye2 = root;
         translate(eye2, -0.1, 0, -0.45);
         rotate(eye2, 0, 1, 0, 180.0f);
         scaleFully(eye2, 2.0);
-        drawMesh(program, eyeVAO, Verts::TriangleVertexCount, proj, view, eye2, Color::Red);
-
-        
-
+        drawMesh(geoProgram, eyeVAO, Verts::TriangleVertexCount, proj, view, eye2, Color::Red);
 
         glfwSwapBuffers(window);
     }
