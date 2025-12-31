@@ -21,7 +21,8 @@ GLuint loadTexture(const char *path)
     if (!data)
         throw std::runtime_error("Failed to load texture");
 
-    GLenum format = (channels == 4) ? GL_RGBA : (channels == 3) ? GL_RGB : GL_RED;
+    GLenum format = (channels == 4) ? GL_RGBA : (channels == 3) ? GL_RGB
+                                                                : GL_RED;
 
     GLuint tex;
     glGenTextures(1, &tex);
@@ -60,11 +61,7 @@ void setVec3(GLuint program, const char *name, const glm::vec3 &v)
     glUniform3f(loc, v.x, v.y, v.z);
 }
 
-void drawMesh(GLuint program, GLuint vao, int vertexCount,
-              const glm::mat4 &proj,
-              const glm::mat4 &view,
-              const glm::mat4 &model,
-              const glm::vec3 &color)
+void drawMesh(GLuint program, GLuint vao, int vertexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model, const glm::vec3 &color)
 {
     glm::mat4 mvp = proj * view * model;
     setMat4(program, "uMVP", mvp);

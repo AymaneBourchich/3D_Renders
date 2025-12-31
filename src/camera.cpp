@@ -21,9 +21,9 @@ void updateCamera(Camera &c, float dt, bool *gKey)
     float v = c.moveSpeed * dt;
 
     // Movement (WASD on XZ plane relative to camera facing)
-    if (gKey[GLFW_KEY_R])
+    if (gKey[GLFW_KEY_W])
         c.pos += fwd * v;
-    if (gKey[GLFW_KEY_F])
+    if (gKey[GLFW_KEY_S])
         c.pos -= fwd * v;
     if (gKey[GLFW_KEY_A])
         c.pos -= right * v;
@@ -31,9 +31,9 @@ void updateCamera(Camera &c, float dt, bool *gKey)
         c.pos += right * v;
 
     // Vertical movement (R/F)
-    if (gKey[GLFW_KEY_W])
+    if (gKey[GLFW_KEY_R])
         c.pos += up * v;
-    if (gKey[GLFW_KEY_S])
+    if (gKey[GLFW_KEY_F])
         c.pos -= up * v;
 
     // Look around with arrow keys (simple, predictable)
