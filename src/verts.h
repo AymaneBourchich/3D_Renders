@@ -92,4 +92,10 @@ namespace Verts
 
     inline constexpr int FloorVertexCount = 6;
 
+    inline constexpr float laserQuad[] = {
+        -0.02f, 0.0f, 0.0f,
+        0.02f, 0.0f, 0.0f,
+        -0.02f, 0.0f, -5.0f,
+        0.02f, 0.0f, -5.0f};
+
 }

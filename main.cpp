@@ -5,6 +5,8 @@
 #include "src/camera.h"
 #include "src/model.h"
 #include "src/consts.h"
+#include "src/vao.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -59,47 +61,6 @@ void initOpenGL(GLFWwindow *window)
     framebuffer_size_callback(window, w, h);
 }
 
-inline void uploadVerts(GLuint vao, GLuint vbo, const float *verts, size_t vertBytes)
-{
-    glBindVertexArray(vao);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertBytes, verts, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * (GLsizei)sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
-inline void uploadVertsTextured(
-    GLuint vao,
-    GLuint vbo,
-    const float *verts,
-    size_t vertBytes)
-{
-    glBindVertexArray(vao);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertBytes, verts, GL_STATIC_DRAW);
-
-    // position (location = 0)
-    glVertexAttribPointer(
-        0, 3, GL_FLOAT, GL_FALSE,
-        5 * sizeof(float),
-        (void *)0);
-    glEnableVertexAttribArray(0);
-
-    // uv (location = 1)
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glBindVertexArray(0);
-}
-
-// ------------------------------------------------------------
-// Main
-// ------------------------------------------------------------
 int main()
 {
     if (!glfwInit())
@@ -126,19 +87,16 @@ int main()
     glPolygonOffset(-1.0f, -1.0f);
 
     GLuint cubeVAO, cubeVBO;
-    glGenVertexArrays(1, &cubeVAO);
-    glGenBuffers(1, &cubeVBO);
+    generateArrays(cubeVAO, cubeVBO);
     uploadVerts(cubeVAO, cubeVBO, Verts::Cube, sizeof(Verts::Cube));
 
-    GLuint prismVAO = 0, prismVBO = 0;
-    glGenVertexArrays(1, &prismVAO);
-    glGenBuffers(1, &prismVBO);
-    uploadVerts(prismVAO, prismVBO, Verts::TriPrism, sizeof(Verts::TriPrism));
-
     GLuint eyeVAO = 0, eyeVBO = 0;
-    glGenVertexArrays(1, &eyeVAO);
-    glGenBuffers(1, &eyeVBO);
+    generateArrays(eyeVAO, eyeVBO);
     uploadVerts(eyeVAO, eyeVBO, Verts::Triangle, sizeof(Verts::Triangle));
+
+    GLuint laserVAO = 0, laserVBO = 0;
+    generateArrays(laserVAO, laserVBO);
+    uploadVerts(laserVAO, laserVBO, Verts::laserQuad, sizeof(Verts::laserQuad));
 
     GLuint floorVAO = 0, floorVBO = 0;
     glGenVertexArrays(1, &floorVAO);
@@ -165,20 +123,37 @@ int main()
         glm::vec3 fwd = camForward(gCam);
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
-        
+        glUseProgram(geoProgram);
+
+        // glm::mat4 laser = initModel();
+        // translate(laser, 0.0f, 0.0f, -2.0f);
+
+        // drawMesh(
+        //     geoProgram,
+        //     laserVAO,
+        //     4,
+        //     proj,
+        //     view,
+        //     laser,
+        //     Color::Red);
 
         float t = (float)now;
 
-        const float rotSpeedDeg = 60.0f;
+        const float rotSpeedDeg = 20.0f;
         float angleDeg = rotSpeedDeg * (float)now;
         glUseProgram(texProgram);
 
         glm::mat4 root = initModel();
         // translate(root, 0.0f, 0.0f, -1.0f);
-        // rotate(root, 0.0f, 1.0f, 0.0f, angleDeg); // rotate whole entity
-        // scaleFully(root, 10);
-        drawMesh(texProgram, floorVAO, 6, proj, view, root, Color::Red);
+        rotate(root, 0.0f, 1.0f, 0.0f, angleDeg); // rotate whole entity
+
+        // glm::mat4 floor = root;
+        // scaleFully(floor, 10);
+        // drawMesh(texProgram, floorVAO, 6, proj, view, floor, Color::Red);
         glUseProgram(geoProgram);
+
+        // glm::mat4 laser = initModel();
+
         glm::mat4 body = root;
         translate(body, 0, 0.2, -1);
         scaleX(body, 3);
