@@ -14,3 +14,4 @@ GLuint loadTexture(const char *path);
 void setMat4(GLuint program, const char *name, const glm::mat4 &m);
 void setVec3(GLuint program, const char *name, const glm::vec3 &v);
 void drawMesh(GLuint program, GLuint vao, int vertexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model, const glm::vec3 &color);
+void drawMeshIndexedColored(GLuint program, GLuint vao, int indexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model);

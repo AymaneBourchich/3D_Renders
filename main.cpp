@@ -58,6 +58,14 @@ static void initOpenGL(GLFWwindow *window)
     framebuffer_size_callback(window, w, h);
 }
 
+static float updateRotation(float speedDegPerSec, float dt, float &angleDeg)
+{
+    angleDeg += speedDegPerSec * dt;
+    if (angleDeg > 360.0f)
+        angleDeg -= 360.0f; // wrap around
+    return angleDeg;
+}
+
 int main()
 {
     if (!glfwInit())
@@ -92,6 +100,10 @@ int main()
     generateArraysIndexed(quadVAO, quadVBO, quadEBO);
     uploadVertsIndexedColored(quadVAO, quadVBO, quadEBO, Verts::QuadVertsColor, sizeof(Verts::QuadVertsColor), Indices::QuadIndices, Counts::QuadIndexCount);
 
+    GLuint cubeVAO = 0, cubeVBO = 0, cubeEBO = 0;
+    generateArraysIndexed(cubeVAO, cubeVBO, cubeEBO);
+    uploadVertsIndexedColored(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVertsColor, sizeof(Verts::CubeVertsColor), Indices::CubeIndices, Counts::CubeIndexCount);
+
     GLuint floorTex = loadTexture("floor.jpg");
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
@@ -107,12 +119,13 @@ int main()
         double now = glfwGetTime();
         float dt = float(now - lastTime);
         lastTime = now;
-        float t = (float)now;
-        const float maxAngleDeg = 40.0f; // how far it swings
-        const float speed = 1.5f;        // how fast it swings
-        float angleDeg = maxAngleDeg * sinf(speed * t);
+        static float angle = 0.0f;
+
+        angle = updateRotation(80.0f, dt, angle);
+
         glm::mat4 root = initModel();
-        rotate(root, 0.0f, 0.0f, 1.0f, angleDeg);
+        rotate(root, 1.0f, 1.0f, 0.0f, angle);
+        rotate(root, 1.0f, 0.0f, 0.0f, angle);
 
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
@@ -124,12 +137,11 @@ int main()
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
-        glUseProgram(simpleProgram);
-        //--------------
+        glm::mat4 model = root;
+        scaleFully(model, 2);
+        drawMeshIndexedColored(simpleProgram, cubeVAO, Counts::CubeIndexCount, proj, view, model);
 
-        glBindVertexArray(quadVAO);
-        glDrawElements(GL_TRIANGLES, Counts::QuadIndexCount, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
+
         glfwSwapBuffers(window);
     }
 
