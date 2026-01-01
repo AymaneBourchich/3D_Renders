@@ -81,6 +81,8 @@ int main()
 
     initOpenGL(window);
     glEnable(GL_POLYGON_OFFSET_LINE);
+    glEnable(GL_STENCIL_TEST);
+    glfwWindowHint(GLFW_STENCIL_BITS, 8);
     glPolygonOffset(-1.0f, -1.0f);
 
     //----------------------
@@ -110,6 +112,8 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
+        glfwWindowHint(GLFW_STENCIL_BITS, 8);
+
         double now = glfwGetTime();
         float dt = float(now - lastTime);
         lastTime = now;
@@ -118,7 +122,8 @@ int main()
         updateCamera(gCam, dt, gKey);
 
         glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
 
         glm::vec3 fwd = camForward(gCam);
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
@@ -131,30 +136,13 @@ int main()
         glm::mat4 root = initModel();
         rotate(root, 0.0f, 0.0f, 1.0f, angleDeg);
 
-        //-------
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        //--------------
 
-        glUseProgram(geoProgram);
-        glm::mat4 laser = root;
-        rotate(laser, 1, 0, 0, 270);
-        translate(laser, 0, 3, 0);
-        drawMesh(geoProgram, laserVAO, 4, proj, view, laser, Color::Red);
 
-        glm::mat4 floor = initModel();
-        drawFloor(texProgram, floorVAO, 6, proj, view, floor, Color::Red);
-        glUseProgram(geoProgram);
 
-        // glm::mat4 laser = initModel();
+        glm::mat4 head = initModel();
+        drawHead(geoProgram, cubeVAO, Verts::CubeVertexCount, proj, view, head, Color::Black);
 
-        // glm::mat4 head = root;
-        // drawHead(geoProgram, cubeVAO, Verts::CubeVertexCount, proj, view, head, Color::Black);
-
-        // glm::mat4 rightEye = root;
-        // drawRightEye(geoProgram, eyeVAO, Verts::TriangleVertexCount, proj, view, rightEye, Color::Red);
-
-        // glm::mat4 leftEye = root;
-        // drawLeftEye(geoProgram, eyeVAO, Verts::TriangleVertexCount, proj, view, leftEye, Color::Red);
 
         glfwSwapBuffers(window);
     }
