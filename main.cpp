@@ -79,11 +79,12 @@ int main()
     if (!window)
         return -1;
 
+    glfwWindowHint(GLFW_STENCIL_BITS, 8);
     initOpenGL(window);
     glEnable(GL_POLYGON_OFFSET_LINE);
-    glEnable(GL_STENCIL_TEST);
-    glfwWindowHint(GLFW_STENCIL_BITS, 8);
     glPolygonOffset(-1.0f, -1.0f);
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
     //----------------------
 
@@ -121,6 +122,12 @@ int main()
         double now = glfwGetTime();
         float dt = float(now - lastTime);
         lastTime = now;
+        float t = (float)now;
+        const float maxAngleDeg = 40.0f; // how far it swings
+        const float speed = 1.5f;        // how fast it swings
+        float angleDeg = maxAngleDeg * sinf(speed * t);
+        glm::mat4 root = initModel();
+        rotate(root, 0.0f, 0.0f, 1.0f, angleDeg);
 
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
@@ -128,20 +135,13 @@ int main()
         glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-
         glm::vec3 fwd = camForward(gCam);
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
-        float t = (float)now;
-        const float maxAngleDeg = 40.0f; // how far it swings
-        const float speed = 1.5f;        // how fast it swings
-        float angleDeg = maxAngleDeg * sinf(speed * t);
-        glm::mat4 root = initModel();
-        rotate(root, 0.0f, 0.0f, 1.0f, angleDeg);
         glUseProgram(geoProgram);
         //--------------
-        
+
         glm::mat4 hex = initModel();
         drawScope(geoProgram, scopeVAO, Verts::ScopeHexVertexCount, proj, view, hex, Color::Magenta);
 
