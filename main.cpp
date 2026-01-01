@@ -108,7 +108,14 @@ int main()
     generateArrays(scopeVAO, scopeVBO);
     uploadVerts(scopeVAO, scopeVBO, Verts::ScopeHex, sizeof(Verts::ScopeHex));
 
+    GLuint quadVAO = 0, quadVBO = 0, quadEBO = 0;
+    glGenVertexArrays(1, &quadVAO);
+    glGenBuffers(1, &quadVBO);
+    glGenBuffers(1, &quadEBO);
+    uploadVertsIndexed(quadVAO, quadVBO, quadEBO, Verts::QuadVerts, sizeof(Verts::QuadVerts), Indices::QuadIndices, Counts::QuadIndexCount);
+
     GLuint floorTex = loadTexture("floor.jpg");
+    GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
     GLuint geoProgram = createProgram("shaders/geo.vert", "shaders/geo.frag");
     double lastTime = glfwGetTime();
@@ -139,12 +146,12 @@ int main()
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
-        glUseProgram(geoProgram);
+        glUseProgram(simpleProgram);
         //--------------
 
-        glm::mat4 hex = initModel();
-        drawScope(geoProgram, scopeVAO, Verts::ScopeHexVertexCount, proj, view, hex, Color::Magenta);
-
+        glBindVertexArray(quadVAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
         glfwSwapBuffers(window);
     }
 

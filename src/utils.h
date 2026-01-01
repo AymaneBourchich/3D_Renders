@@ -8,16 +8,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
 
-
 std::string loadFile(const char *path);
-GLuint loadTexture(const char* path);
+GLuint loadTexture(const char *path);
 
 void setMat4(GLuint program, const char *name, const glm::mat4 &m);
 void setVec3(GLuint program, const char *name, const glm::vec3 &v);
-void drawMesh(GLuint program,
-              GLuint vao,
-              int vertexCount,
-              const glm::mat4 &proj,
-              const glm::mat4 &view,
-              const glm::mat4 &model,
-              const glm::vec3 &color);
+void drawMesh(GLuint program, GLuint vao, int vertexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model, const glm::vec3 &color);
