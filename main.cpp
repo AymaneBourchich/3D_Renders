@@ -103,6 +103,10 @@ int main()
     generateArrays(floorVAO, floorVBO);
     uploadVertsTextured(floorVAO, floorVBO, Verts::Floor, sizeof(Verts::Floor));
 
+    GLuint scopeVAO = 0, scopeVBO = 0;
+    generateArrays(scopeVAO, scopeVBO);
+    uploadVerts(scopeVAO, scopeVBO, Verts::ScopeHex, sizeof(Verts::ScopeHex));
+
     GLuint floorTex = loadTexture("floor.jpg");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
     GLuint geoProgram = createProgram("shaders/geo.vert", "shaders/geo.frag");
@@ -135,14 +139,11 @@ int main()
         float angleDeg = maxAngleDeg * sinf(speed * t);
         glm::mat4 root = initModel();
         rotate(root, 0.0f, 0.0f, 1.0f, angleDeg);
-
+        glUseProgram(geoProgram);
         //--------------
-
-
-
-        glm::mat4 head = initModel();
-        drawHead(geoProgram, cubeVAO, Verts::CubeVertexCount, proj, view, head, Color::Black);
-
+        
+        glm::mat4 hex = initModel();
+        drawScope(geoProgram, scopeVAO, Verts::ScopeHexVertexCount, proj, view, hex, Color::Magenta);
 
         glfwSwapBuffers(window);
     }

@@ -98,4 +98,37 @@ namespace Verts
         -0.02f, 0.0f, -5.0f,
         0.02f, 0.0f, -5.0f};
 
+    inline constexpr float ScopeHex[] = {
+        // Triangle 1
+        0.0f, 0.0f, 0.0f,
+        0.35f, 0.0f, 0.0f,
+        0.175f, 0.0f, 0.303f,
+
+        // Triangle 2
+        0.0f, 0.0f, 0.0f,
+        0.175f, 0.0f, 0.303f,
+        -0.175f, 0.0f, 0.303f,
+
+        // Triangle 3
+        0.0f, 0.0f, 0.0f,
+        -0.175f, 0.0f, 0.303f,
+        -0.35f, 0.0f, 0.0f,
+
+        // Triangle 4
+        0.0f, 0.0f, 0.0f,
+        -0.35f, 0.0f, 0.0f,
+        -0.175f, 0.0f, -0.303f,
+
+        // Triangle 5
+        0.0f, 0.0f, 0.0f,
+        -0.175f, 0.0f, -0.303f,
+        0.175f, 0.0f, -0.303f,
+
+        // Triangle 6
+        0.0f, 0.0f, 0.0f,
+        0.175f, 0.0f, -0.303f,
+        0.35f, 0.0f, 0.0f};
+
+    inline constexpr int ScopeHexVertexCount = 18;
+
 }

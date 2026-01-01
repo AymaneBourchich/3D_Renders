@@ -41,3 +41,11 @@ void drawLaser(GLuint program, GLuint vao, int vertexCount, const glm::mat4 &pro
     translate(model, 0, 3, 0);
     drawMesh(program, vao, 4, proj, view, model, Color::Red);
 }
+
+void drawScope(GLuint program, GLuint vao, int vertexCount, const glm::mat4 &proj, glm::mat4 &view, glm::mat4 &model, const glm::vec3 &color)
+{
+    glUseProgram(program);
+    rotate(model, 1, 0, 0, 90);
+    scaleFully(model, 2);
+    drawMesh(program, vao, Verts::ScopeHexVertexCount, proj, view, model, color);
+}
