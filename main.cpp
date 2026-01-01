@@ -88,31 +88,9 @@ int main()
 
     //----------------------
 
-    GLuint cubeVAO, cubeVBO;
-    generateArrays(cubeVAO, cubeVBO);
-    uploadVerts(cubeVAO, cubeVBO, Verts::Cube, sizeof(Verts::Cube));
-
-    GLuint eyeVAO = 0, eyeVBO = 0;
-    generateArrays(eyeVAO, eyeVBO);
-    uploadVerts(eyeVAO, eyeVBO, Verts::Triangle, sizeof(Verts::Triangle));
-
-    GLuint laserVAO = 0, laserVBO = 0;
-    generateArrays(laserVAO, laserVBO);
-    uploadVerts(laserVAO, laserVBO, Verts::laserQuad, sizeof(Verts::laserQuad));
-
-    GLuint floorVAO = 0, floorVBO = 0;
-    generateArrays(floorVAO, floorVBO);
-    uploadVertsTextured(floorVAO, floorVBO, Verts::Floor, sizeof(Verts::Floor));
-
-    GLuint scopeVAO = 0, scopeVBO = 0;
-    generateArrays(scopeVAO, scopeVBO);
-    uploadVerts(scopeVAO, scopeVBO, Verts::ScopeHex, sizeof(Verts::ScopeHex));
-
     GLuint quadVAO = 0, quadVBO = 0, quadEBO = 0;
-    glGenVertexArrays(1, &quadVAO);
-    glGenBuffers(1, &quadVBO);
-    glGenBuffers(1, &quadEBO);
-    uploadVertsIndexed(quadVAO, quadVBO, quadEBO, Verts::QuadVerts, sizeof(Verts::QuadVerts), Indices::QuadIndices, Counts::QuadIndexCount);
+    generateArraysIndexed(quadVAO, quadVBO, quadEBO);
+    uploadVertsIndexedColored(quadVAO, quadVBO, quadEBO, Verts::QuadVertsColor, sizeof(Verts::QuadVertsColor), Indices::QuadIndices, Counts::QuadIndexCount);
 
     GLuint floorTex = loadTexture("floor.jpg");
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
@@ -150,7 +128,7 @@ int main()
         //--------------
 
         glBindVertexArray(quadVAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, Counts::QuadIndexCount, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
         glfwSwapBuffers(window);
     }

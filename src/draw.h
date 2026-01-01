@@ -47,5 +47,4 @@ void drawScope(GLuint program, GLuint vao, int vertexCount, const glm::mat4 &pro
     glUseProgram(program);
     rotate(model, 1, 0, 0, 90);
     scaleFully(model, 2);
-    drawMesh(program, vao, Verts::ScopeHexVertexCount, proj, view, model, color);
 }
