@@ -124,13 +124,12 @@ int main()
         angle = updateRotation(80.0f, dt, angle);
 
         glm::mat4 root = initModel();
-        rotate(root, 1.0f, 1.0f, 0.0f, angle);
-        rotate(root, 1.0f, 0.0f, 0.0f, angle);
+        rotate(root, 0.0f, 1.0f, 0.0f, angle);
 
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
 
-        glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         glm::vec3 fwd = camForward(gCam);
@@ -139,8 +138,9 @@ int main()
 
         glm::mat4 model = root;
         scaleFully(model, 2);
+        rotate(model, 1, 0, 0, 30);
+        rotate(model, 0, 1, 0, 30);
         drawMeshIndexedColored(simpleProgram, cubeVAO, Counts::CubeIndexCount, proj, view, model);
-
 
         glfwSwapBuffers(window);
     }
