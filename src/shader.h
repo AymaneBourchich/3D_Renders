@@ -4,4 +4,4 @@
 #include <iostream>
 
 GLuint compileShader(GLenum type, const char* source);
-GLuint createProgram(const char* vertPath, const char* fragPath);
+GLuint createProgram(const char* vertPath, const char* fragPath, const char* geoPath = "");

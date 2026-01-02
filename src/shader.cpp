@@ -17,7 +17,7 @@ GLuint compileShader(GLenum type, const char* source)
     return shader;
 }
 
-GLuint createProgram(const char* vertPath, const char* fragPath)
+GLuint createProgram(const char* vertPath, const char* fragPath, const char* geoPath)
 {
     std::string v = loadFile(vertPath);
     std::string f = loadFile(fragPath);
@@ -26,9 +26,22 @@ GLuint createProgram(const char* vertPath, const char* fragPath)
     GLuint vs = compileShader(GL_VERTEX_SHADER, v.c_str());
     GLuint fs = compileShader(GL_FRAGMENT_SHADER, f.c_str());
 
+    GLuint gs = 0;
+    if (geoPath && geoPath[0] != '\0') // if a geometry shader path is provided
+    {
+        std::string g = loadFile(geoPath);
+        if (!g.empty())
+            gs = compileShader(GL_GEOMETRY_SHADER, g.c_str());
+        else
+            std::cerr << "Failed to load geometry shader: " << geoPath << "\n";
+    }
+
     GLuint prog = glCreateProgram();
     glAttachShader(prog, vs);
     glAttachShader(prog, fs);
+    if (gs != 0)
+        glAttachShader(prog, gs);
+
     glLinkProgram(prog);
 
     GLint ok = 0;
@@ -42,5 +55,8 @@ GLuint createProgram(const char* vertPath, const char* fragPath)
 
     glDeleteShader(vs);
     glDeleteShader(fs);
+    if (gs != 0)
+        glDeleteShader(gs);
+
     return prog;
 }
