@@ -94,6 +94,10 @@ int main()
     generateArraysIndexed(cubeVAO, cubeVBO, cubeEBO);
     uploadVertsIndexed(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVerts, sizeof(Verts::CubeVerts), Indices::CubeIndices, Counts::CubeIndexCount);
 
+    GLuint texQuadVAO = 0, texQuadVBO = 0, texQuadEBO = 0;
+    generateArraysIndexed(texQuadVAO, texQuadVBO, texQuadEBO);
+    uploadVertsTextured(texQuadVAO, texQuadVBO, texQuadEBO, Verts::CubeVertsUV, sizeof(Verts::QuadVertsUV), Indices::QuadIndices, Counts::QuadIndexCount);
+
     GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
     generateArraysIndexed(texCubeVAO, texCubeVBO, texCubeEBO);
     uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CubeVertsUV, sizeof(Verts::CubeVertsUV), Indices::CubeIndices, Counts::CubeIndexCount);
@@ -101,6 +105,8 @@ int main()
     //---------------- End VAO-VBO-EBO------------------//
 
     GLuint cubeTex = loadTexture("hex.jpg");
+    GLuint floorTex = loadTexture("floor.jpg");
+
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
     GLuint geoProgram = createProgram("shaders/geo.vert", "shaders/geo.frag");
@@ -137,14 +143,15 @@ int main()
         //------Begin Manual drawing loop--------------------//
 
         glm::mat4 model = root;
-        scaleFully(model, 2);
         drawMeshIndexedTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, model);
 
         glm::mat4 floor = initModel();
-        translate(floor, 0, -7, 0);
+        //translate(floor, 0, -0.5, 0);
         rotate(floor, 1, 0, 0, 90);
-        scaleFully(floor, 10);
-        drawMeshIndexedColored(simpleProgram, quadVAO, Counts::QuadIndexCount, proj, view, floor);
+        scaleFully(floor, 100);
+
+        drawMeshIndexedTextured(texProgram, texQuadVAO, floorTex, Counts::QuadIndexCount, proj, view, floor);
+        //drawMeshIndexedColored(simpleProgram, quadVAO, Counts::QuadIndexCount, proj, view, floor);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);

@@ -9,7 +9,12 @@ namespace Verts
         0.5f, -0.5f, 0.0f,
         0.5f, 0.5f, 0.0f,
         -0.5f, 0.5f, 0.0f};
-
+    inline constexpr float QuadVertsUV[] = {
+        // pos
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+        0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f};
 
     inline constexpr float CubeVerts[] = {
         // pos
