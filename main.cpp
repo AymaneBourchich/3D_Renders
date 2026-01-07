@@ -127,7 +127,7 @@ int main()
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
 
-        glClearColor(1.0f, 0.1f, 0.15f, 0.2);
+        glClearColor(0.5f, 0.5f, 0.5f, 0.7);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         glm::vec3 fwd = camForward(gCam);
@@ -136,10 +136,15 @@ int main()
 
         //------Begin Manual drawing loop--------------------//
 
-        glUseProgram(texProgram);
-
         glm::mat4 model = root;
+        scaleFully(model, 2);
         drawMeshIndexedTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, model);
+
+        glm::mat4 floor = initModel();
+        translate(floor, 0, -7, 0);
+        rotate(floor, 1, 0, 0, 90);
+        scaleFully(floor, 10);
+        drawMeshIndexedColored(simpleProgram, quadVAO, Counts::QuadIndexCount, proj, view, floor);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);

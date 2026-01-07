@@ -10,6 +10,7 @@ namespace Verts
         0.5f, 0.5f, 0.0f,
         -0.5f, 0.5f, 0.0f};
 
+
     inline constexpr float CubeVerts[] = {
         // pos
         -0.5f, -0.5f, -0.5f,
