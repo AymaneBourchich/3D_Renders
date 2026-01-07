@@ -10,24 +10,16 @@ namespace Verts
         0.5f, 0.5f, 0.0f,
         -0.5f, 0.5f, 0.0f};
 
-    inline constexpr float QuadVertsColor[] = {
-
-        -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-        0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-        -0.5f, 0.5f, 0.0f, 1.0f, 0.5f, 1.0f};
-
-    inline constexpr float CubeVertsColor[] = {
-        // pos                // color
-        -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, // 0: red
-        0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,  // 1: green
-        0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f,   // 2: blue
-        -0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 1.0f,  // 3: black
-        -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 1.0f,  // 4: magenta
-        0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 1.0f,   // 5: cyan
-        0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f,    // 6: grey
-        -0.5f, 0.5f, 0.5f, 0.0f, 0.5f, 0.25f   // 7: orange
-    };
+    inline constexpr float CubeVerts[] = {
+        // pos
+        -0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, 0.5f, -0.5f,
+        -0.5f, 0.5f, -0.5f,
+        -0.5f, -0.5f, 0.5f,
+        0.5f, -0.5f, 0.5f,
+        0.5f, 0.5f, 0.5f,
+        -0.5f, 0.5f, 0.5f};
 
 }
 namespace Indices

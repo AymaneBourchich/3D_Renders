@@ -102,7 +102,7 @@ int main()
 
     GLuint cubeVAO = 0, cubeVBO = 0, cubeEBO = 0;
     generateArraysIndexed(cubeVAO, cubeVBO, cubeEBO);
-    uploadVertsIndexedColored(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVertsColor, sizeof(Verts::CubeVertsColor), Indices::CubeIndices, Counts::CubeIndexCount);
+    uploadVertsIndexed(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVerts, sizeof(Verts::CubeVerts), Indices::CubeIndices, Counts::CubeIndexCount);
 
     GLuint floorTex = loadTexture("floor.jpg");
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag", "shaders/simple.geom");
@@ -124,8 +124,8 @@ int main()
         angle = updateRotation(80.0f, dt, angle);
 
         glm::mat4 root = initModel();
-        rotate(root, 1.0f, 1.0f, 0.0f, angle);
-        rotate(root, 1.0f, 0.0f, 0.0f, angle);
+        // rotate(root, 1.0f, 1.0f, 0.0f, angle);
+        // rotate(root, 1.0f, 0.0f, 0.0f, angle);
 
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
