@@ -124,12 +124,13 @@ int main()
         angle = updateRotation(80.0f, dt, angle);
 
         glm::mat4 root = initModel();
-        // rotate(root, 0.0f, 1.0f, 0.0f, angle);
+        rotate(root, 1.0f, 1.0f, 0.0f, angle);
+        rotate(root, 1.0f, 0.0f, 0.0f, angle);
 
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
 
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         glm::vec3 fwd = camForward(gCam);
@@ -137,12 +138,9 @@ int main()
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
         glm::mat4 model = root;
-        glUseProgram(simpleProgram);
+        scaleFully(model, 2);
+        drawMeshIndexedColored(simpleProgram, cubeVAO, Counts::CubeIndexCount, proj, view, model);
 
-        // Set any uniforms your geometry shader expects
-        float explodeAmount = 0.5f * sinf((float)now * 2.0f); // oscillates for demo
-        glUniform1f(glGetUniformLocation(simpleProgram, "uExplode"), explodeAmount);
-        drawMeshIndexedColored(simpleProgram, quadVAO, Counts::QuadIndexCount, proj, view, model);
 
         glfwSwapBuffers(window);
     }
