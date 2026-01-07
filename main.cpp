@@ -70,31 +70,21 @@ int main()
 {
     if (!glfwInit())
         return -1;
-
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWmonitor *monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode *mode = glfwGetVideoMode(monitor);
-    GLFWwindow *window = glfwCreateWindow(
-        mode->width,
-        mode->height,
-        "Single Cube",
-        monitor, // fullscreen
-        nullptr);
-
+    GLFWwindow *window = glfwCreateWindow(mode->width, mode->height, "Single Cube", monitor, nullptr);
     if (!window)
         return -1;
 
-    glfwWindowHint(GLFW_STENCIL_BITS, 8);
     initOpenGL(window);
     glEnable(GL_POLYGON_OFFSET_LINE);
     glPolygonOffset(-1.0f, -1.0f);
-    glEnable(GL_STENCIL_TEST);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-    //----------------------
+    //---------------- Begin VAO-VBO-EBO------------------//
 
     GLuint quadVAO = 0, quadVBO = 0, quadEBO = 0;
     generateArraysIndexed(quadVAO, quadVBO, quadEBO);
@@ -108,11 +98,14 @@ int main()
     generateArraysIndexed(texCubeVAO, texCubeVBO, texCubeEBO);
     uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CubeVertsUV, sizeof(Verts::CubeVertsUV), Indices::CubeIndices, Counts::CubeIndexCount);
 
+    //---------------- End VAO-VBO-EBO------------------//
+
     GLuint cubeTex = loadTexture("hex.jpg");
-    GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag", "shaders/simple.geom");
+    GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
     GLuint geoProgram = createProgram("shaders/geo.vert", "shaders/geo.frag");
     double lastTime = glfwGetTime();
+    //---------------- End VAO-VBO-EBO------------------//
 
     //----------------------
 

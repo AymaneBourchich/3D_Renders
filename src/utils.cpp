@@ -28,15 +28,7 @@ GLuint loadTexture(const char *path)
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
 
-    glTexImage2D(
-        GL_TEXTURE_2D,
-        0,
-        format,
-        w, h,
-        0,
-        format,
-        GL_UNSIGNED_BYTE,
-        data);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, w, h, 0, format, GL_UNSIGNED_BYTE, data);
 
     glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -49,13 +41,13 @@ GLuint loadTexture(const char *path)
     return tex;
 }
 
-void setMat4(GLuint program, const char *name, const glm::mat4 &m)
+static void setMat4(GLuint program, const char *name, const glm::mat4 &m)
 {
     GLint loc = glGetUniformLocation(program, name);
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m));
 }
 
-void setVec3(GLuint program, const char *name, const glm::vec3 &v)
+static void setVec3(GLuint program, const char *name, const glm::vec3 &v)
 {
     GLint loc = glGetUniformLocation(program, name);
     glUniform3f(loc, v.x, v.y, v.z);
@@ -82,14 +74,7 @@ void drawMeshIndexedColored(GLuint program, GLuint vao, int indexCount, const gl
     glBindVertexArray(0);
 }
 
-void drawMeshIndexedTextured(
-    GLuint program,
-    GLuint vao,
-    GLuint texture,
-    int indexCount,
-    const glm::mat4 &proj,
-    const glm::mat4 &view,
-    const glm::mat4 &model)
+void drawMeshIndexedTextured(GLuint program, GLuint vao, GLuint texture, int indexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model)
 {
     glUseProgram(program);
 
