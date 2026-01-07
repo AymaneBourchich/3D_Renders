@@ -21,6 +21,43 @@ namespace Verts
         0.5f, 0.5f, 0.5f,
         -0.5f, 0.5f, 0.5f};
 
+    inline constexpr float CubeVertsUV[] = {
+        // Front face (+Z)
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+
+        // Back face (-Z)
+        0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+
+        // Left face (-X)
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+        -0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+
+        // Right face (+X)
+        0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+
+        // Top face (+Y)
+        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+
+        // Bottom face (-Y)
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 1.0f};
+
 }
 namespace Indices
 {
@@ -29,24 +66,30 @@ namespace Indices
         0, 2, 3};
 
     inline constexpr unsigned int CubeIndices[] = {
-        // back face
+        // Front
         0, 1, 2,
         0, 2, 3,
-        // front face
+
+        // Back
         4, 5, 6,
         4, 6, 7,
-        // left face
-        4, 0, 3,
-        4, 3, 7,
-        // right face
-        1, 5, 6,
-        1, 6, 2,
-        // bottom face
-        4, 5, 1,
-        4, 1, 0,
-        // top face
-        3, 2, 6,
-        3, 6, 7};
+
+        // Left
+        8, 9, 10,
+        8, 10, 11,
+
+        // Right
+        12, 13, 14,
+        12, 14, 15,
+
+        // Top
+        16, 17, 18,
+        16, 18, 19,
+
+        // Bottom
+        20, 21, 22,
+        20, 22, 23};
+
 }
 
 namespace Counts

@@ -104,7 +104,11 @@ int main()
     generateArraysIndexed(cubeVAO, cubeVBO, cubeEBO);
     uploadVertsIndexed(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVerts, sizeof(Verts::CubeVerts), Indices::CubeIndices, Counts::CubeIndexCount);
 
-    GLuint floorTex = loadTexture("floor.jpg");
+    GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
+    generateArraysIndexed(texCubeVAO, texCubeVBO, texCubeEBO);
+    uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CubeVertsUV, sizeof(Verts::CubeVertsUV), Indices::CubeIndices, Counts::CubeIndexCount);
+
+    GLuint cubeTex = loadTexture("hex.jpg");
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag", "shaders/simple.geom");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
     GLuint geoProgram = createProgram("shaders/geo.vert", "shaders/geo.frag");
@@ -124,24 +128,27 @@ int main()
         angle = updateRotation(80.0f, dt, angle);
 
         glm::mat4 root = initModel();
-        // rotate(root, 1.0f, 1.0f, 0.0f, angle);
-        // rotate(root, 1.0f, 0.0f, 0.0f, angle);
+        rotate(root, 1.0f, 1.0f, 0.0f, angle);
+        rotate(root, 1.0f, 0.0f, 0.0f, angle);
 
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
 
-        glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
+        glClearColor(1.0f, 0.1f, 0.15f, 0.2);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         glm::vec3 fwd = camForward(gCam);
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
+        //------Begin Manual drawing loop--------------------//
+
+        glUseProgram(texProgram);
+
         glm::mat4 model = root;
-        scaleFully(model, 2);
-        drawMeshIndexedColored(simpleProgram, cubeVAO, Counts::CubeIndexCount, proj, view, model);
+        drawMeshIndexedTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, model);
 
-
+        // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);
     }
 

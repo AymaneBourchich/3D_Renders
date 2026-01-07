@@ -70,15 +70,39 @@ void drawMesh(GLuint program, GLuint vao, int vertexCount, const glm::mat4 &proj
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 }
+
 void drawMeshIndexedColored(GLuint program, GLuint vao, int indexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model)
 {
-    // Compute and send MVP
     glUseProgram(program);
     glm::mat4 mvp = proj * view * model;
     setMat4(program, "uMVP", mvp);
 
-    // Bind VAO and draw using indices
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+}
+
+void drawMeshIndexedTextured(
+    GLuint program,
+    GLuint vao,
+    GLuint texture,
+    int indexCount,
+    const glm::mat4 &proj,
+    const glm::mat4 &view,
+    const glm::mat4 &model)
+{
+    glUseProgram(program);
+
+    glm::mat4 mvp = proj * view * model;
+    setMat4(program, "uMVP", mvp);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glUniform1i(glGetUniformLocation(program, "uTex"), 0);
+
+    glBindVertexArray(vao);
+    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
