@@ -1,6 +1,7 @@
 #include "shader.h"
 #include "utils.h"
-GLuint compileShader(GLenum type, const char* source)
+#include <glm/gtc/type_ptr.hpp>
+GLuint compileShader(GLenum type, const char *source)
 {
     GLuint shader = glCreateShader(type);
     glShaderSource(shader, 1, &source, nullptr);
@@ -12,16 +13,18 @@ GLuint compileShader(GLenum type, const char* source)
     {
         char log[2048];
         glGetShaderInfoLog(shader, sizeof(log), nullptr, log);
-        std::cerr << "Shader compile error:\n" << log << "\n";
+        std::cerr << "Shader compile error:\n"
+                  << log << "\n";
     }
     return shader;
 }
 
-GLuint createProgram(const char* vertPath, const char* fragPath, const char* geoPath)
+GLuint createProgram(const char *vertPath, const char *fragPath, const char *geoPath)
 {
     std::string v = loadFile(vertPath);
     std::string f = loadFile(fragPath);
-    if (v.empty() || f.empty()) return 0;
+    if (v.empty() || f.empty())
+        return 0;
 
     GLuint vs = compileShader(GL_VERTEX_SHADER, v.c_str());
     GLuint fs = compileShader(GL_FRAGMENT_SHADER, f.c_str());
@@ -50,7 +53,8 @@ GLuint createProgram(const char* vertPath, const char* fragPath, const char* geo
     {
         char log[2048];
         glGetProgramInfoLog(prog, sizeof(log), nullptr, log);
-        std::cerr << "Program link error:\n" << log << "\n";
+        std::cerr << "Program link error:\n"
+                  << log << "\n";
     }
 
     glDeleteShader(vs);
@@ -59,4 +63,22 @@ GLuint createProgram(const char* vertPath, const char* fragPath, const char* geo
         glDeleteShader(gs);
 
     return prog;
+}
+
+void setMat4(GLuint program, const char *name, const glm::mat4 &m)
+{
+    GLint loc = glGetUniformLocation(program, name);
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m));
+}
+
+void setVec3(GLuint program, const char *name, const glm::vec3 &v)
+{
+    GLint loc = glGetUniformLocation(program, name);
+    glUniform3f(loc, v.x, v.y, v.z);
+}
+
+void setValue(GLuint program, const char *name, float value)
+{
+    GLint loc = glGetUniformLocation(program, name);
+    glUniform1f(loc, value);
 }
