@@ -1,6 +1,6 @@
 #include "draw.h"
 #include "shader.h"
-
+#include "consts.h"
 void drawMesh(GLuint program, GLuint &vao, int indexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model)
 {
     glUseProgram(program);
@@ -16,7 +16,7 @@ void drawMeshTextured(GLuint program, GLuint &vao, GLuint texture, int indexCoun
     glUseProgram(program);
 
     setMat4(program, "uMVP", proj * view * model);
-    setVec3(program, "uAmbient", glm::vec3(0.6, 0, 0));
+    setVec3(program, "uAmbient", Color::Cyan);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);

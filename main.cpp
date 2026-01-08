@@ -105,8 +105,8 @@ int main()
 
     //---------------- End VAO-VBO-EBO------------------//
 
-    GLuint cubeTex = loadTexture("chess.jpg");
-    GLuint floorTex = loadTexture("floor.jpg");
+    GLuint cubeTex = loadTexture("textures/chess.jpg");
+    GLuint floorTex = loadTexture("textures/floor.jpg");
 
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
