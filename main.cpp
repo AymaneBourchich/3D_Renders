@@ -81,6 +81,7 @@ int main()
         return -1;
 
     initOpenGL(window);
+
     glEnable(GL_POLYGON_OFFSET_LINE);
     glPolygonOffset(-1.0f, -1.0f);
 
@@ -143,15 +144,8 @@ int main()
         //------Begin Manual drawing loop--------------------//
 
         glm::mat4 model = root;
-        drawMeshIndexedTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, model);
-
-        glm::mat4 floor = initModel();
-        //translate(floor, 0, -0.5, 0);
-        rotate(floor, 1, 0, 0, 90);
-        scaleFully(floor, 100);
-
-        drawMeshIndexedTextured(texProgram, texQuadVAO, floorTex, Counts::QuadIndexCount, proj, view, floor);
-        //drawMeshIndexedColored(simpleProgram, quadVAO, Counts::QuadIndexCount, proj, view, floor);
+        // drawMeshIndexedTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, model);
+        drawMesh(simpleProgram, cubeVAO, Counts::CubeIndexCount, proj, view, model);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);

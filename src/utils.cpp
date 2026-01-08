@@ -53,17 +53,7 @@ static void setVec3(GLuint program, const char *name, const glm::vec3 &v)
     glUniform3f(loc, v.x, v.y, v.z);
 }
 
-void drawMesh(GLuint program, GLuint vao, int vertexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model, const glm::vec3 &color)
-{
-    glm::mat4 mvp = proj * view * model;
-    setMat4(program, "uMVP", mvp);
-    setVec3(program, "uColor", color);
-
-    glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-}
-
-void drawMeshIndexedColored(GLuint program, GLuint vao, int indexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model)
+void drawMesh(GLuint program, GLuint vao, int indexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model)
 {
     glUseProgram(program);
     glm::mat4 mvp = proj * view * model;
@@ -74,7 +64,7 @@ void drawMeshIndexedColored(GLuint program, GLuint vao, int indexCount, const gl
     glBindVertexArray(0);
 }
 
-void drawMeshIndexedTextured(GLuint program, GLuint vao, GLuint texture, int indexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model)
+void drawMeshTextured(GLuint program, GLuint vao, GLuint texture, int indexCount, const glm::mat4 &proj, const glm::mat4 &view, const glm::mat4 &model)
 {
     glUseProgram(program);
 
