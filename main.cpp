@@ -88,19 +88,19 @@ int main()
     //---------------- Begin VAO-VBO-EBO------------------//
 
     GLuint quadVAO = 0, quadVBO = 0, quadEBO = 0;
-    generateArraysIndexed(quadVAO, quadVBO, quadEBO);
-    uploadVertsIndexed(quadVAO, quadVBO, quadEBO, Verts::QuadVerts, sizeof(Verts::QuadVerts), Indices::QuadIndices, Counts::QuadIndexCount);
+    generateArrays(quadVAO, quadVBO, quadEBO);
+    uploadVerts(quadVAO, quadVBO, quadEBO, Verts::QuadVerts, sizeof(Verts::QuadVerts), Indices::QuadIndices, Counts::QuadIndexCount);
 
     GLuint cubeVAO = 0, cubeVBO = 0, cubeEBO = 0;
-    generateArraysIndexed(cubeVAO, cubeVBO, cubeEBO);
-    uploadVertsIndexed(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVerts, sizeof(Verts::CubeVerts), Indices::CubeIndices, Counts::CubeIndexCount);
+    generateArrays(cubeVAO, cubeVBO, cubeEBO);
+    uploadVerts(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVerts, sizeof(Verts::CubeVerts), Indices::CubeIndices, Counts::CubeIndexCount);
 
     GLuint texQuadVAO = 0, texQuadVBO = 0, texQuadEBO = 0;
-    generateArraysIndexed(texQuadVAO, texQuadVBO, texQuadEBO);
+    generateArrays(texQuadVAO, texQuadVBO, texQuadEBO);
     uploadVertsTextured(texQuadVAO, texQuadVBO, texQuadEBO, Verts::CubeVertsUV, sizeof(Verts::QuadVertsUV), Indices::QuadIndices, Counts::QuadIndexCount);
 
     GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
-    generateArraysIndexed(texCubeVAO, texCubeVBO, texCubeEBO);
+    generateArrays(texCubeVAO, texCubeVBO, texCubeEBO);
     uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CubeVertsUV, sizeof(Verts::CubeVertsUV), Indices::CubeIndices, Counts::CubeIndexCount);
 
     //---------------- End VAO-VBO-EBO------------------//
@@ -110,7 +110,6 @@ int main()
 
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
-    GLuint geoProgram = createProgram("shaders/geo.vert", "shaders/geo.frag");
     double lastTime = glfwGetTime();
     //---------------- End VAO-VBO-EBO------------------//
 
