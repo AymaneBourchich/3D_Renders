@@ -105,7 +105,7 @@ int main()
 
     //---------------- End VAO-VBO-EBO------------------//
 
-    GLuint cubeTex = loadTexture("hex.jpg");
+    GLuint cubeTex = loadTexture("red-hex.jpg");
     GLuint floorTex = loadTexture("floor.jpg");
 
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
@@ -124,11 +124,10 @@ int main()
         lastTime = now;
         static float angle = 0.0f;
 
-        angle = updateRotation(80.0f, dt, angle);
+        angle = updateRotation(30.0f, dt, angle);
 
         glm::mat4 root = initModel();
         rotate(root, 1.0f, 1.0f, 0.0f, angle);
-        rotate(root, 1.0f, 0.0f, 0.0f, angle);
 
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
@@ -143,8 +142,7 @@ int main()
         //------Begin Manual drawing loop--------------------//
 
         glm::mat4 model = root;
-        // drawMeshIndexedTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, model);
-        drawMesh(simpleProgram, cubeVAO, Counts::CubeIndexCount, proj, view, model);
+        drawMeshTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, model);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);

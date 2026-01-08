@@ -4,8 +4,10 @@ in vec2 vUV;
 out vec4 FragColor;
 
 uniform sampler2D uTex;
+uniform float uAmbient;
 
 void main()
 {
-    FragColor = texture(uTex, vUV);
+    vec3 color = texture(uTex, vUV).rgb;
+    FragColor = vec4(color * uAmbient, 1.0);
 }
