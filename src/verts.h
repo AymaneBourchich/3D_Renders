@@ -5,10 +5,11 @@ namespace Verts
 {
     inline constexpr float QuadVerts[] = {
         // pos
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.5f, 0.5f, 0.0f,
-        -0.5f, 0.5f, 0.0f};
+        -5000.0f, -5000.0f, 0.0f, 
+        5000.0f, -5000.0f, 0.0f,
+        5000.0f, 5000.0f, 0.0f,
+        -5000.0f, 5000.0f, 0.0f
+    };
     inline constexpr float QuadVertsUV[] = {
         // pos
         -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,

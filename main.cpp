@@ -127,7 +127,9 @@ int main()
         angle = updateRotation(30.0f, dt, angle);
 
         glm::mat4 root = initModel();
+        translate(root, 0, 3, 0);
         rotate(root, 1.0f, 1.0f, 0.0f, angle);
+        
 
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
@@ -141,8 +143,13 @@ int main()
 
         //------Begin Manual drawing loop--------------------//
 
-        glm::mat4 model = root;
-        drawMeshTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, model);
+        glm::mat4 model = initModel();
+        rotate(model, 1, 0, 0, 90);
+        translate(model, 0, -2, 0);
+        drawMesh(simpleProgram, quadVAO, Counts::QuadIndexCount, proj, view, model);
+
+        
+        drawMeshTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, root);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);
