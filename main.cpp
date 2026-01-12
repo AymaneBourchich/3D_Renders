@@ -110,10 +110,15 @@ int main()
     GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
     generateArrays(texCubeVAO, texCubeVBO, texCubeEBO);
     uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CubeVertsUV, sizeof(Verts::CubeVertsUV), Indices::CubeIndices, Counts::CubeIndexCount);
+
+    GLuint texFaceVAO = 0, texFaceVBO = 0, texFaceEBO = 0;
+    generateArrays(texFaceVAO, texFaceVBO, texFaceEBO);
+    uploadVertsTextured(texFaceVAO, texFaceVBO, texFaceEBO, Verts::faceVerts, sizeof(Verts::faceVerts), Indices::FaceIndices, Counts::FaceCount);
     //---------------- End VAO-VBO-EBO------------------//
 
     GLuint cubeTex = loadTexture("textures/chess.jpg");
     GLuint floorTex = loadTexture("textures/floor.jpg");
+    GLuint robotTex = loadTexture("textures/cyber.jpg");
 
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
@@ -150,7 +155,7 @@ int main()
         //------Begin Manual drawing loop--------------------//
 
         glm::mat4 eye = initModel();
-        drawMesh(simpleProgram, eyeVAO, Counts::EyeCount, proj, view, eye);
+        drawMeshTextured(texProgram, texFaceVAO, robotTex, Counts::FaceCount, proj, view, eye);
 
 
 
