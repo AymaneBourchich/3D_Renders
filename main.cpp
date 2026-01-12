@@ -97,7 +97,7 @@ int main()
 
     GLuint faceVAO = 0, faceVBO = 0, faceEBO = 0;
     generateArrays(faceVAO, faceVBO, faceEBO);
-    uploadVerts(faceVAO, faceVBO, faceEBO, Verts::Face, sizeof(Verts::Face), Indices::Face, Counts::Face);
+    uploadVerts(faceVAO, faceVBO, faceEBO, Verts::HeadVerts, sizeof(Verts::HeadVerts), Indices::HeadIndices, Counts::HeadCount);
 
     GLuint texQuadVAO = 0, texQuadVBO = 0, texQuadEBO = 0;
     generateArrays(texQuadVAO, texQuadVBO, texQuadEBO);
@@ -133,7 +133,6 @@ int main()
         glm::mat4 root = initModel();
         translate(root, 0, 3, 0);
         rotate(root, 1.0f, 1.0f, 0.0f, angle);
-        
 
         glfwPollEvents();
         updateCamera(gCam, dt, gKey);
@@ -148,9 +147,7 @@ int main()
         //------Begin Manual drawing loop--------------------//
 
         glm::mat4 model = initModel();
-        drawMesh(simpleProgram, faceVAO, Counts::Face, proj, view, model);
-
-        
+        drawMesh(simpleProgram, faceVAO, Counts::HeadCount, proj, view, model, true);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);

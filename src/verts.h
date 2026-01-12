@@ -91,7 +91,7 @@ namespace Verts
         0.5f, -0.5f, 0.5f, 1.0f, 1.0f,
         -0.5f, -0.5f, 0.5f, 0.0f, 1.0f};
 
-    inline constexpr float Face[] = {
+    inline constexpr float HeadVerts[] = {
         -0.5f, -0.5f, 0.0f,
         -0.0f, -0.75f, 0.0f,
         0.5f, -0.5f, 0.0f,
@@ -115,7 +115,7 @@ namespace Indices
         0, 1, 2,
         0, 2, 3};
 
-    inline constexpr unsigned int Face[] = {
+    inline constexpr unsigned int HeadIndices[] = {
         0, 1, 2,
         0, 4, 2,
         4, 2, 3,
@@ -173,7 +173,7 @@ namespace Indices
 
 namespace Counts
 {
-    inline constexpr int QuadIndexCount = 6;
-    inline constexpr int CubeIndexCount = 36;
-    inline constexpr int Face = sizeof(Indices::Face) / sizeof(Indices::Face[0]);
+    inline constexpr int QuadIndexCount = sizeof(Indices::QuadIndices) / sizeof(Indices::QuadIndices[0]);
+    inline constexpr int CubeIndexCount = sizeof(Indices::CubeIndices) / sizeof(Indices::CubeIndices[0]);
+    inline constexpr int HeadCount = sizeof(Indices::HeadIndices) / sizeof(Indices::HeadIndices[0]);
 }
