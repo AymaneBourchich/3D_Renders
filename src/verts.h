@@ -120,10 +120,28 @@ namespace Indices
         0, 4, 2,
         4, 2, 3,
         5, 0, 4,
+
         6, 7, 8,
         6, 10, 8,
         10, 8, 9,
-        11, 10, 6
+        11, 10, 6,
+
+        6, 0, 7,
+        0, 1, 7,
+        7, 1, 2,
+        7, 2, 8,
+
+        11, 6, 0,
+        11, 0, 5,
+
+        3, 2, 8,
+        3, 8, 9,
+
+        11, 5, 10,
+        10, 5, 4,
+        10, 4, 3,
+        10, 3, 9
+
     };
 
     inline constexpr unsigned int CubeIndices[] = {
@@ -157,5 +175,5 @@ namespace Counts
 {
     inline constexpr int QuadIndexCount = 6;
     inline constexpr int CubeIndexCount = 36;
-    inline constexpr int Face = 24;
+    inline constexpr int Face = sizeof(Indices::Face) / sizeof(Indices::Face[0]);
 }
