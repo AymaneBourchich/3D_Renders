@@ -95,6 +95,10 @@ int main()
     generateArrays(cubeVAO, cubeVBO, cubeEBO);
     uploadVerts(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVerts, sizeof(Verts::CubeVerts), Indices::CubeIndices, Counts::CubeIndexCount);
 
+    GLuint faceVAO = 0, faceVBO = 0, faceEBO = 0;
+    generateArrays(faceVAO, faceVBO, faceEBO);
+    uploadVerts(faceVAO, faceVBO, faceEBO, Verts::Face, sizeof(Verts::Face), Indices::Face, Counts::Face);
+
     GLuint texQuadVAO = 0, texQuadVBO = 0, texQuadEBO = 0;
     generateArrays(texQuadVAO, texQuadVBO, texQuadEBO);
     uploadVertsTextured(texQuadVAO, texQuadVBO, texQuadEBO, Verts::CubeVertsUV, sizeof(Verts::QuadVertsUV), Indices::QuadIndices, Counts::QuadIndexCount);
@@ -144,12 +148,9 @@ int main()
         //------Begin Manual drawing loop--------------------//
 
         glm::mat4 model = initModel();
-        rotate(model, 1, 0, 0, 90);
-        translate(model, 0, -2, 0);
-        drawMesh(simpleProgram, quadVAO, Counts::QuadIndexCount, proj, view, model);
+        drawMesh(simpleProgram, faceVAO, Counts::Face, proj, view, model);
 
         
-        drawMeshTextured(texProgram, texCubeVAO, cubeTex, Counts::CubeIndexCount, proj, view, root);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);

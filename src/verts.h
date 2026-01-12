@@ -5,11 +5,10 @@ namespace Verts
 {
     inline constexpr float QuadVerts[] = {
         // pos
-        -5000.0f, -5000.0f, 0.0f, 
+        -5000.0f, -5000.0f, 0.0f,
         5000.0f, -5000.0f, 0.0f,
         5000.0f, 5000.0f, 0.0f,
-        -5000.0f, 5000.0f, 0.0f
-    };
+        -5000.0f, 5000.0f, 0.0f};
     inline constexpr float QuadVertsUV[] = {
         // pos
         -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -17,7 +16,6 @@ namespace Verts
         0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
         -0.5f, 0.5f, 0.0f, 0.0f, 1.0f};
 
-    // 6 faces × 4 vertices
     // positions duplicated per face
     inline constexpr float CubeVerts[] = {
         // Front
@@ -93,12 +91,30 @@ namespace Verts
         0.5f, -0.5f, 0.5f, 1.0f, 1.0f,
         -0.5f, -0.5f, 0.5f, 0.0f, 1.0f};
 
+    inline constexpr float Face[] = {
+        -0.5f, -0.5f, 0.0f,
+        -0.0f, -0.75f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.5f, 0.5f, 0.0f,
+        0.0f, 0.25f, 0.0f,
+        -0.5f, 0.5f, 0.0f,
+
+        
+
+    };
+
 }
 namespace Indices
 {
     inline constexpr unsigned int QuadIndices[] = {
         0, 1, 2,
         0, 2, 3};
+
+    inline constexpr unsigned int Face[] = {
+        0, 1, 2,
+        0, 4, 2,
+        4, 2, 3,
+        5, 0, 4};
 
     inline constexpr unsigned int CubeIndices[] = {
         // Front
@@ -131,4 +147,5 @@ namespace Counts
 {
     inline constexpr int QuadIndexCount = 6;
     inline constexpr int CubeIndexCount = 36;
+    inline constexpr int Face = 12;
 }
