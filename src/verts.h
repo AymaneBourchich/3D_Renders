@@ -99,7 +99,12 @@ namespace Verts
         0.0f, 0.25f, 0.0f,
         -0.5f, 0.5f, 0.0f,
 
-        
+        -0.5f, -0.5f, -0.5f,
+        -0.0f, -0.75f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, 0.5f, -0.5f,
+        0.0f, 0.25f, -0.5f,
+        -0.5f, 0.5f, -0.5f
 
     };
 
@@ -114,7 +119,12 @@ namespace Indices
         0, 1, 2,
         0, 4, 2,
         4, 2, 3,
-        5, 0, 4};
+        5, 0, 4,
+        6, 7, 8,
+        6, 10, 8,
+        10, 8, 9,
+        11, 10, 6
+    };
 
     inline constexpr unsigned int CubeIndices[] = {
         // Front
@@ -147,5 +157,5 @@ namespace Counts
 {
     inline constexpr int QuadIndexCount = 6;
     inline constexpr int CubeIndexCount = 36;
-    inline constexpr int Face = 12;
+    inline constexpr int Face = 24;
 }
