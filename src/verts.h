@@ -92,19 +92,27 @@ namespace Verts
         -0.5f, -0.5f, 0.5f, 0.0f, 1.0f};
 
     inline constexpr float HeadVerts[] = {
-        -0.5f, -0.5f, 0.0f,
-        -0.0f, -0.75f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.5f, 0.5f, 0.0f,
-        0.0f, 0.25f, 0.0f,
-        -0.5f, 0.5f, 0.0f,
+        -0.5f, -0.5f, 0.0f, // 0
+        -0.0f, -0.75f, 0.0f, // 1
+        0.5f, -0.5f, 0.0f, // 2
+        0.5f, 0.5f, 0.0f, // 3
+        0.0f, 0.25f, 0.0f, // 4
+        -0.5f, 0.5f, 0.0f, // 5 
 
-        -0.5f, -0.5f, -0.5f,
-        -0.0f, -0.75f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f, 0.5f, -0.5f,
-        0.0f, 0.25f, -0.5f,
-        -0.5f, 0.5f, -0.5f
+        -0.5f, -0.5f, -0.5f, // 6
+        -0.0f, -0.75f, -0.5f, // 7 
+        0.5f, -0.5f, -0.5f, // 8 
+        0.5f, 0.5f, -0.5f, // 9 
+        0.0f, 0.25f, -0.5f, // 10 
+        -0.5f, 0.5f, -0.5f // 11
+
+    };
+
+    inline constexpr float EyeVerts[] = {
+        -0.5f, 0.25f, 0.0f, // 0
+        0.0f, -0.25f, 0.0f, // 1
+        0.5f, 0.25f, 0.0f, // 2
+        0.f, 0.0f, 0.0f // 3
 
     };
 
@@ -114,6 +122,10 @@ namespace Indices
     inline constexpr unsigned int QuadIndices[] = {
         0, 1, 2,
         0, 2, 3};
+
+    inline constexpr unsigned int EyeIndices[] = {
+        0, 1, 3,
+        3, 1, 2};
 
     inline constexpr unsigned int HeadIndices[] = {
         0, 1, 2,
@@ -176,4 +188,5 @@ namespace Counts
     inline constexpr int QuadIndexCount = sizeof(Indices::QuadIndices) / sizeof(Indices::QuadIndices[0]);
     inline constexpr int CubeIndexCount = sizeof(Indices::CubeIndices) / sizeof(Indices::CubeIndices[0]);
     inline constexpr int HeadCount = sizeof(Indices::HeadIndices) / sizeof(Indices::HeadIndices[0]);
+    inline constexpr int EyeCount = sizeof(Indices::EyeIndices) / sizeof(Indices::EyeIndices[0]);
 }
