@@ -118,7 +118,7 @@ int main()
 
     GLuint cubeTex = loadTexture("textures/chess.jpg");
     GLuint floorTex = loadTexture("textures/floor.jpg");
-    GLuint robotTex = loadTexture("textures/cyber.jpg");
+    GLuint robotTex = loadTexture("textures/circuit.jpg");
 
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
@@ -156,7 +156,6 @@ int main()
 
         glm::mat4 eye = initModel();
         drawMeshTextured(texProgram, texFaceVAO, robotTex, Counts::FaceCount, proj, view, eye);
-
 
 
         // ------End manual drawing loop--------------------//
