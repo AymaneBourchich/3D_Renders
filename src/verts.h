@@ -1,9 +1,15 @@
 #pragma once
 #include <cstddef>
 
+template <typename T, size_t N>
+inline constexpr int getCount(const T (&)[N])
+{
+    return static_cast<int>(N);
+}
+
 namespace Verts
 {
-    inline constexpr float floorVertsUV[] = {
+    inline constexpr float FLOOR_VERTS[] = {
         // pos
         -0.5f, 0.0f, -0.5f, 0.0f, 0.0f,
         0.5f, 0.0f, -0.5f, 1.0f, 0.0f,
@@ -13,7 +19,7 @@ namespace Verts
     };
 
     // positions duplicated per face
-    inline constexpr float CubeVerts[] = {
+    inline constexpr float CUBE_VERTS[] = {
         // Front
         -0.5f, -0.5f, 0.5f,
         0.5f, -0.5f, 0.5f,
@@ -50,7 +56,7 @@ namespace Verts
         0.5f, -0.5f, 0.5f,
         -0.5f, -0.5f, 0.5f};
 
-    inline constexpr float CubeVertsUV[] = {
+    inline constexpr float CUBE_VERTS_UV[] = {
         // Front face (+Z)
         -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
         0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
@@ -87,7 +93,7 @@ namespace Verts
         0.5f, -0.5f, 0.5f, 1.0f, 1.0f,
         -0.5f, -0.5f, 0.5f, 0.0f, 1.0f};
 
-    inline constexpr float HeadVerts[] = {
+    inline constexpr float HEAD_VERTS[] = {
         -0.5f, -0.5f, 0.0f,  // 0
         -0.0f, -0.75f, 0.0f, // 1
         0.5f, -0.5f, 0.0f,   // 2
@@ -104,7 +110,7 @@ namespace Verts
 
     };
 
-    inline constexpr float faceVerts[] = {
+    inline constexpr float FACE_VERTS[] = {
         -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,    // 0
         -0.0f, -0.75f, 0.0f, 0.5f, -0.25f, // 1
         0.5f, -0.5f, 0.0f, 1.0f, 0.0f,     // 2
@@ -113,7 +119,7 @@ namespace Verts
         -0.5f, 0.5f, 0.0f, 0.0f, 1.0f      // 5
     };
 
-    inline constexpr float EyeVerts[] = {
+    inline constexpr float EYE_VERTS[] = {
         -0.5f, 0.25f, 0.0f, // 0
         0.0f, -0.25f, 0.0f, // 1
         0.5f, 0.25f, 0.0f,  // 2
@@ -124,17 +130,17 @@ namespace Verts
 namespace Indices
 {
 
-    inline constexpr unsigned int EyeIndices[] = {
+    inline constexpr unsigned int EYE_INDICES[] = {
         0, 1, 3,
         3, 1, 2};
 
-    inline constexpr unsigned int FaceIndices[] = {
+    inline constexpr unsigned int FACE_INDICES[] = {
         0, 1, 2,
         0, 4, 2,
         4, 2, 3,
         5, 0, 4};
 
-    inline constexpr unsigned int HeadIndices[] = {
+    inline constexpr unsigned int HEAD_INDICES[] = {
         0, 1, 2,
         0, 4, 2,
         4, 2, 3,
@@ -163,7 +169,7 @@ namespace Indices
 
     };
 
-    inline constexpr unsigned int CubeIndices[] = {
+    inline constexpr unsigned int CUBE_INDICES[] = {
         // Front
         0, 1, 2,
         0, 2, 3,
@@ -188,16 +194,15 @@ namespace Indices
         20, 21, 22,
         20, 22, 23};
 
-    inline constexpr unsigned int floorIndices[] = {
+    inline constexpr unsigned int FLOOR_INDICES[] = {
         0, 1, 2,
         0, 3, 2};
 }
-
 namespace Counts
 {
-    inline constexpr int CubeIndexCount = sizeof(Indices::CubeIndices) / sizeof(Indices::CubeIndices[0]);
-    inline constexpr int HeadCount = sizeof(Indices::HeadIndices) / sizeof(Indices::HeadIndices[0]);
-    inline constexpr int EyeCount = sizeof(Indices::EyeIndices) / sizeof(Indices::EyeIndices[0]);
-    inline constexpr int FaceCount = 12;
-    inline constexpr int floorCount = 6;
+    inline constexpr int CUBE_COUNT = getCount(Indices::CUBE_INDICES);
+    inline constexpr int HEAD_COUNT = getCount(Indices::HEAD_INDICES);
+    inline constexpr int EYE_COUNT = getCount(Indices::EYE_INDICES);
+    inline constexpr int FACE_COUNT = getCount(Indices::FACE_INDICES);
+    inline constexpr int FLOOR_COUNT = getCount(Indices::FLOOR_INDICES);
 }

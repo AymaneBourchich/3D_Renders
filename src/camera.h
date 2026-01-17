@@ -5,8 +5,8 @@
 
 struct Camera
 {
-    glm::vec3 pos = glm::vec3(0.0f, 5.0f, 5.0f); // starting position
-    float yawDeg = -135.0f;                      // points diagonally toward origin along -X/-Z
+    glm::vec3 pos = glm::vec3(0.0f, 3.0f, 3.0f); // starting position
+    float yawDeg = -100.0f;                      // points diagonally toward origin along -X/-Z
     float pitchDeg = -45.0f;                     // 45° downward
     float moveSpeed = 3.5f;                      // units per second
     float turnSpeed = 90.0f;                     // degrees per second

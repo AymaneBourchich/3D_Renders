@@ -89,27 +89,33 @@ int main()
 
     GLuint cubeVAO = 0, cubeVBO = 0, cubeEBO = 0;
     generateArrays(cubeVAO, cubeVBO, cubeEBO);
-    uploadVerts(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVerts, sizeof(Verts::CubeVerts), Indices::CubeIndices, Counts::CubeIndexCount);
+    uploadVerts(cubeVAO, cubeVBO, cubeEBO, Verts::CUBE_VERTS,
+                sizeof(Verts::CUBE_VERTS), Indices::CUBE_INDICES, Counts::CUBE_COUNT);
 
     GLuint headVAO = 0, headVBO = 0, headEBO = 0;
     generateArrays(headVAO, headVBO, headEBO);
-    uploadVerts(headVAO, headVBO, headEBO, Verts::HeadVerts, sizeof(Verts::HeadVerts), Indices::HeadIndices, Counts::HeadCount);
+    uploadVerts(headVAO, headVBO, headEBO, Verts::HEAD_VERTS,
+                sizeof(Verts::HEAD_VERTS), Indices::HEAD_INDICES, Counts::HEAD_COUNT);
 
     GLuint eyeVAO = 0, eyeVBO = 0, eyeEBO = 0;
     generateArrays(eyeVAO, eyeVBO, eyeEBO);
-    uploadVerts(eyeVAO, eyeVBO, eyeEBO, Verts::EyeVerts, sizeof(Verts::EyeVerts), Indices::EyeIndices, Counts::EyeCount);
+    uploadVerts(eyeVAO, eyeVBO, eyeEBO, Verts::EYE_VERTS,
+                sizeof(Verts::EYE_VERTS), Indices::EYE_INDICES, Counts::EYE_COUNT);
 
     GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
     generateArrays(texCubeVAO, texCubeVBO, texCubeEBO);
-    uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CubeVertsUV, sizeof(Verts::CubeVertsUV), Indices::CubeIndices, Counts::CubeIndexCount);
+    uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO,
+                        Verts::CUBE_VERTS_UV, sizeof(Verts::CUBE_VERTS_UV), Indices::CUBE_INDICES, Counts::CUBE_COUNT);
 
     GLuint texFaceVAO = 0, texFaceVBO = 0, texFaceEBO = 0;
     generateArrays(texFaceVAO, texFaceVBO, texFaceEBO);
-    uploadVertsTextured(texFaceVAO, texFaceVBO, texFaceEBO, Verts::faceVerts, sizeof(Verts::faceVerts), Indices::FaceIndices, Counts::FaceCount);
+    uploadVertsTextured(texFaceVAO, texFaceVBO, texFaceEBO,
+                        Verts::FACE_VERTS, sizeof(Verts::FACE_VERTS), Indices::FACE_INDICES, Counts::FACE_COUNT);
 
     GLuint texFloorVAO = 0, texFloorVBO = 0, texFloorEBO = 0;
     generateArrays(texFloorVAO, texFloorVBO, texFloorEBO);
-    uploadVertsTextured(texFloorVAO, texFloorVBO, texFloorEBO, Verts::floorVertsUV, sizeof(Verts::floorVertsUV), Indices::floorIndices, Counts::floorCount);
+    uploadVertsTextured(texFloorVAO, texFloorVBO, texFloorEBO,
+                        Verts::FLOOR_VERTS, sizeof(Verts::FLOOR_VERTS), Indices::FLOOR_INDICES, Counts::FLOOR_COUNT);
     //---------------- End VAO-VBO-EBO------------------//
 
     GLuint cubeTex = loadTexture("textures/chess.jpg");
@@ -152,11 +158,11 @@ int main()
 
         glm::mat4 floor = initModel();
         scaleFully(floor, 100);
-        drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FaceCount, proj, view, floor);
+        drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FACE_COUNT, proj, view, floor);
 
         glm::mat4 cube = initModel();
         translate(cube, 0, 0.5, 0);
-        drawMesh(simpleProgram, cubeVAO, Counts::CubeIndexCount, proj, view, cube);
+        drawMesh(simpleProgram, cubeVAO, Counts::CUBE_COUNT, proj, view, cube);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);
