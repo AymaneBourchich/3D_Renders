@@ -89,18 +89,15 @@ int main()
 
     GLuint cubeVAO = 0, cubeVBO = 0, cubeEBO = 0;
     generateArrays(cubeVAO, cubeVBO, cubeEBO);
-    uploadVerts(cubeVAO, cubeVBO, cubeEBO, Verts::CUBE_VERTS,
-                sizeof(Verts::CUBE_VERTS), Indices::CUBE_INDICES, Counts::CUBE_COUNT);
+    uploadVerts(cubeVAO, cubeVBO, cubeEBO, Verts::CUBE_VERTS, Indices::CUBE_INDICES);
 
     GLuint headVAO = 0, headVBO = 0, headEBO = 0;
     generateArrays(headVAO, headVBO, headEBO);
-    uploadVerts(headVAO, headVBO, headEBO, Verts::HEAD_VERTS,
-                sizeof(Verts::HEAD_VERTS), Indices::HEAD_INDICES, Counts::HEAD_COUNT);
+    uploadVerts(headVAO, headVBO, headEBO, Verts::HEAD_VERTS, Indices::HEAD_INDICES);
 
     GLuint eyeVAO = 0, eyeVBO = 0, eyeEBO = 0;
     generateArrays(eyeVAO, eyeVBO, eyeEBO);
-    uploadVerts(eyeVAO, eyeVBO, eyeEBO, Verts::EYE_VERTS,
-                sizeof(Verts::EYE_VERTS), Indices::EYE_INDICES, Counts::EYE_COUNT);
+    uploadVerts(eyeVAO, eyeVBO, eyeEBO, Verts::EYE_VERTS, Indices::EYE_INDICES);
 
     GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
     generateArrays(texCubeVAO, texCubeVBO, texCubeEBO);

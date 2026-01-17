@@ -3,7 +3,7 @@ CXXFLAGS := -Wall -Wextra -std=c++17 -I/usr/include
 LIBS     := -lglfw -lGLEW -lGL
 
 OUT := triangle
-SRC := main.cpp src/utils.cpp src/shader.cpp  src/camera.cpp src/model.cpp src/vao.cpp src/draw.cpp
+SRC := main.cpp src/utils.cpp src/shader.cpp  src/camera.cpp src/model.cpp src/draw.cpp
 
 all: $(OUT)
 
