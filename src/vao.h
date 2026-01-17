@@ -1,7 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 
-inline void generateArrays(GLuint &vao, GLuint &vbo, GLuint &ebo)
+static inline void generateArrays(GLuint &vao, GLuint &vbo, GLuint &ebo)
 {
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
@@ -9,7 +9,7 @@ inline void generateArrays(GLuint &vao, GLuint &vbo, GLuint &ebo)
 }
 // template version of uploadVerts
 template <size_t VERT_COUNT, size_t INDEX_COUNT>
-inline void uploadVerts(GLuint &vao, GLuint vbo, GLuint ebo,
+static inline void uploadVerts(GLuint &vao, GLuint vbo, GLuint ebo,
                  const float (&verts)[VERT_COUNT],
                  const unsigned int (&indices)[INDEX_COUNT])
 {
@@ -31,7 +31,7 @@ inline void uploadVerts(GLuint &vao, GLuint vbo, GLuint ebo,
     glBindVertexArray(0);
 }
 
-inline void uploadVertsColored(GLuint &vao, GLuint vbo, GLuint ebo, const float *verts, size_t vertBytes, const unsigned int *indices, size_t indexCount)
+static inline void uploadVertsColored(GLuint &vao, GLuint vbo, GLuint ebo, const float *verts, size_t vertBytes, const unsigned int *indices, size_t indexCount)
 {
     glBindVertexArray(vao);
 
@@ -51,7 +51,7 @@ inline void uploadVertsColored(GLuint &vao, GLuint vbo, GLuint ebo, const float 
     glBindVertexArray(0);
 }
 template <size_t VERT_COUNT, size_t INDEX_COUNT>
-inline void uploadVertsTextured(GLuint &vao, GLuint vbo, GLuint ebo,
+static inline void uploadVertsTextured(GLuint &vao, GLuint vbo, GLuint ebo,
                          const float (&verts)[VERT_COUNT],
                          const unsigned int (&indices)[INDEX_COUNT])
 {
@@ -72,4 +72,22 @@ inline void uploadVertsTextured(GLuint &vao, GLuint vbo, GLuint ebo,
     glEnableVertexAttribArray(1);
 
     glBindVertexArray(0);
+}
+
+template <size_t VERT_COUNT, size_t INDEX_COUNT>
+inline void setupVAO(GLuint &vao, GLuint &vbo, GLuint &ebo,
+                     const float (&verts)[VERT_COUNT],
+                     const unsigned int (&indices)[INDEX_COUNT])
+{
+    generateArrays(vao, vbo, ebo);
+    uploadVerts(vao, vbo, ebo, verts, indices);
+}
+
+template <size_t VERT_COUNT, size_t INDEX_COUNT>
+inline void setupVAOTextured(GLuint &vao, GLuint &vbo, GLuint &ebo,
+                             const float (&verts)[VERT_COUNT],
+                             const unsigned int (&indices)[INDEX_COUNT])
+{
+    generateArrays(vao, vbo, ebo);
+    uploadVertsTextured(vao, vbo, ebo, verts, indices);
 }

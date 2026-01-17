@@ -19,14 +19,14 @@ bool gKey[1024] = {false};
 static int gFbW = 800;
 static int gFbH = 600;
 
-static void framebuffer_size_callback(GLFWwindow *, int w, int h)
+static inline void framebuffer_size_callback(GLFWwindow *, int w, int h)
 {
     gFbW = (w > 0) ? w : 1;
     gFbH = (h > 0) ? h : 1;
     glViewport(0, 0, gFbW, gFbH);
 }
 
-static void key_callback(GLFWwindow *window, int key, int, int action, int)
+static inline void key_callback(GLFWwindow *window, int key, int, int action, int)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -40,7 +40,7 @@ static void key_callback(GLFWwindow *window, int key, int, int action, int)
     }
 }
 
-static void initOpenGL(GLFWwindow *window)
+static inline void initOpenGL(GLFWwindow *window)
 {
     glfwMakeContextCurrent(window);
     glfwSetKeyCallback(window, key_callback);
@@ -58,7 +58,7 @@ static void initOpenGL(GLFWwindow *window)
     framebuffer_size_callback(window, w, h);
 }
 
-static float updateRotation(float speedDegPerSec, float dt, float &angleDeg)
+static inline float updateRotation(float speedDegPerSec, float dt, float &angleDeg)
 {
     angleDeg += speedDegPerSec * dt;
     if (angleDeg > 360.0f)
@@ -88,28 +88,22 @@ int main()
     //---------------- Begin VAO-VBO-EBO------------------//
 
     GLuint cubeVAO = 0, cubeVBO = 0, cubeEBO = 0;
-    generateArrays(cubeVAO, cubeVBO, cubeEBO);
-    uploadVerts(cubeVAO, cubeVBO, cubeEBO, Verts::CUBE_VERTS, Indices::CUBE_INDICES);
+    setupVAO(cubeVAO, cubeVBO, cubeEBO, Verts::CUBE_VERTS, Indices::CUBE_INDICES);
 
     GLuint headVAO = 0, headVBO = 0, headEBO = 0;
-    generateArrays(headVAO, headVBO, headEBO);
-    uploadVerts(headVAO, headVBO, headEBO, Verts::HEAD_VERTS, Indices::HEAD_INDICES);
+    setupVAO(headVAO, headVBO, headEBO, Verts::HEAD_VERTS, Indices::HEAD_INDICES);
 
     GLuint eyeVAO = 0, eyeVBO = 0, eyeEBO = 0;
-    generateArrays(eyeVAO, eyeVBO, eyeEBO);
-    uploadVerts(eyeVAO, eyeVBO, eyeEBO, Verts::EYE_VERTS, Indices::EYE_INDICES);
+    setupVAO(headVAO, headVBO, headEBO, Verts::HEAD_VERTS, Indices::HEAD_INDICES);
 
     GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
-    generateArrays(texCubeVAO, texCubeVBO, texCubeEBO);
-    uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CUBE_VERTS_UV, Indices::CUBE_INDICES);
+    setupVAOTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CUBE_VERTS_UV, Indices::CUBE_INDICES);
 
     GLuint texFaceVAO = 0, texFaceVBO = 0, texFaceEBO = 0;
-    generateArrays(texFaceVAO, texFaceVBO, texFaceEBO);
-    uploadVertsTextured(texFaceVAO, texFaceVBO, texFaceEBO, Verts::FACE_VERTS, Indices::FACE_INDICES);
+    setupVAOTextured(texFaceVAO, texFaceVBO, texFaceEBO, Verts::FACE_VERTS, Indices::FACE_INDICES);
 
     GLuint texFloorVAO = 0, texFloorVBO = 0, texFloorEBO = 0;
-    generateArrays(texFloorVAO, texFloorVBO, texFloorEBO);
-    uploadVertsTextured(texFloorVAO, texFloorVBO, texFloorEBO, Verts::FLOOR_VERTS, Indices::FLOOR_INDICES);
+    setupVAOTextured(texFloorVAO, texFloorVBO, texFloorEBO, Verts::FLOOR_VERTS, Indices::FLOOR_INDICES);
 
     //---------------- End VAO-VBO-EBO------------------//
 
