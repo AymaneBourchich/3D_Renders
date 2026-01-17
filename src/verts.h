@@ -3,18 +3,14 @@
 
 namespace Verts
 {
-    inline constexpr float QuadVerts[] = {
+    inline constexpr float floorVertsUV[] = {
         // pos
-        -5000.0f, -5000.0f, 0.0f,
-        5000.0f, -5000.0f, 0.0f,
-        5000.0f, 5000.0f, 0.0f,
-        -5000.0f, 5000.0f, 0.0f};
-    inline constexpr float QuadVertsUV[] = {
-        // pos
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-        0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f};
+        -0.5f, 0.0f, -0.5f, 0.0f, 0.0f,
+        0.5f, 0.0f, -0.5f, 1.0f, 0.0f,
+        0.5f, 0.0f, 0.5f, 1.0f, 1.0f,
+        -0.5f, 0.0f, 0.5f, 0.0f, 1.0f
+
+    };
 
     // positions duplicated per face
     inline constexpr float CubeVerts[] = {
@@ -109,12 +105,12 @@ namespace Verts
     };
 
     inline constexpr float faceVerts[] = {
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,  // 0
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,    // 0
         -0.0f, -0.75f, 0.0f, 0.5f, -0.25f, // 1
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f,   // 2
-        0.5f, 0.5f, 0.0f, 1.0f, 1.0f,    // 3
-        0.0f, 0.25f, 0.0f, 0.5f, 1.0f,   // 4
-        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f    // 5
+        0.5f, -0.5f, 0.0f, 1.0f, 0.0f,     // 2
+        0.5f, 0.5f, 0.0f, 1.0f, 1.0f,      // 3
+        0.0f, 0.25f, 0.0f, 0.5f, 1.0f,     // 4
+        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f      // 5
     };
 
     inline constexpr float EyeVerts[] = {
@@ -127,9 +123,6 @@ namespace Verts
 }
 namespace Indices
 {
-    inline constexpr unsigned int QuadIndices[] = {
-        0, 1, 2,
-        0, 2, 3};
 
     inline constexpr unsigned int EyeIndices[] = {
         0, 1, 3,
@@ -195,13 +188,16 @@ namespace Indices
         20, 21, 22,
         20, 22, 23};
 
+    inline constexpr unsigned int floorIndices[] = {
+        0, 1, 2,
+        0, 3, 2};
 }
 
 namespace Counts
 {
-    inline constexpr int QuadIndexCount = sizeof(Indices::QuadIndices) / sizeof(Indices::QuadIndices[0]);
     inline constexpr int CubeIndexCount = sizeof(Indices::CubeIndices) / sizeof(Indices::CubeIndices[0]);
     inline constexpr int HeadCount = sizeof(Indices::HeadIndices) / sizeof(Indices::HeadIndices[0]);
     inline constexpr int EyeCount = sizeof(Indices::EyeIndices) / sizeof(Indices::EyeIndices[0]);
     inline constexpr int FaceCount = 12;
+    inline constexpr int floorCount = 6;
 }

@@ -87,10 +87,6 @@ int main()
 
     //---------------- Begin VAO-VBO-EBO------------------//
 
-    GLuint quadVAO = 0, quadVBO = 0, quadEBO = 0;
-    generateArrays(quadVAO, quadVBO, quadEBO);
-    uploadVerts(quadVAO, quadVBO, quadEBO, Verts::QuadVerts, sizeof(Verts::QuadVerts), Indices::QuadIndices, Counts::QuadIndexCount);
-
     GLuint cubeVAO = 0, cubeVBO = 0, cubeEBO = 0;
     generateArrays(cubeVAO, cubeVBO, cubeEBO);
     uploadVerts(cubeVAO, cubeVBO, cubeEBO, Verts::CubeVerts, sizeof(Verts::CubeVerts), Indices::CubeIndices, Counts::CubeIndexCount);
@@ -103,10 +99,6 @@ int main()
     generateArrays(eyeVAO, eyeVBO, eyeEBO);
     uploadVerts(eyeVAO, eyeVBO, eyeEBO, Verts::EyeVerts, sizeof(Verts::EyeVerts), Indices::EyeIndices, Counts::EyeCount);
 
-    GLuint texQuadVAO = 0, texQuadVBO = 0, texQuadEBO = 0;
-    generateArrays(texQuadVAO, texQuadVBO, texQuadEBO);
-    uploadVertsTextured(texQuadVAO, texQuadVBO, texQuadEBO, Verts::CubeVertsUV, sizeof(Verts::QuadVertsUV), Indices::QuadIndices, Counts::QuadIndexCount);
-
     GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
     generateArrays(texCubeVAO, texCubeVBO, texCubeEBO);
     uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CubeVertsUV, sizeof(Verts::CubeVertsUV), Indices::CubeIndices, Counts::CubeIndexCount);
@@ -114,6 +106,10 @@ int main()
     GLuint texFaceVAO = 0, texFaceVBO = 0, texFaceEBO = 0;
     generateArrays(texFaceVAO, texFaceVBO, texFaceEBO);
     uploadVertsTextured(texFaceVAO, texFaceVBO, texFaceEBO, Verts::faceVerts, sizeof(Verts::faceVerts), Indices::FaceIndices, Counts::FaceCount);
+
+    GLuint texFloorVAO = 0, texFloorVBO = 0, texFloorEBO = 0;
+    generateArrays(texFloorVAO, texFloorVBO, texFloorEBO);
+    uploadVertsTextured(texFloorVAO, texFloorVBO, texFloorEBO, Verts::floorVertsUV, sizeof(Verts::floorVertsUV), Indices::floorIndices, Counts::floorCount);
     //---------------- End VAO-VBO-EBO------------------//
 
     GLuint cubeTex = loadTexture("textures/chess.jpg");
@@ -154,9 +150,13 @@ int main()
 
         //------Begin Manual drawing loop--------------------//
 
-        glm::mat4 eye = initModel();
-        drawMeshTextured(texProgram, texFaceVAO, robotTex, Counts::FaceCount, proj, view, eye);
+        glm::mat4 floor = initModel();
+        scaleFully(floor, 100);
+        drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FaceCount, proj, view, floor);
 
+        glm::mat4 cube = initModel();
+        translate(cube, 0, 0.5, 0);
+        drawMesh(simpleProgram, cubeVAO, Counts::CubeIndexCount, proj, view, cube);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);
