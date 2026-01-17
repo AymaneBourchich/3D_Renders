@@ -104,18 +104,16 @@ int main()
 
     GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
     generateArrays(texCubeVAO, texCubeVBO, texCubeEBO);
-    uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO,
-                        Verts::CUBE_VERTS_UV, sizeof(Verts::CUBE_VERTS_UV), Indices::CUBE_INDICES, Counts::CUBE_COUNT);
+    uploadVertsTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CUBE_VERTS_UV, Indices::CUBE_INDICES);
 
     GLuint texFaceVAO = 0, texFaceVBO = 0, texFaceEBO = 0;
     generateArrays(texFaceVAO, texFaceVBO, texFaceEBO);
-    uploadVertsTextured(texFaceVAO, texFaceVBO, texFaceEBO,
-                        Verts::FACE_VERTS, sizeof(Verts::FACE_VERTS), Indices::FACE_INDICES, Counts::FACE_COUNT);
+    uploadVertsTextured(texFaceVAO, texFaceVBO, texFaceEBO, Verts::FACE_VERTS, Indices::FACE_INDICES);
 
     GLuint texFloorVAO = 0, texFloorVBO = 0, texFloorEBO = 0;
     generateArrays(texFloorVAO, texFloorVBO, texFloorEBO);
-    uploadVertsTextured(texFloorVAO, texFloorVBO, texFloorEBO,
-                        Verts::FLOOR_VERTS, sizeof(Verts::FLOOR_VERTS), Indices::FLOOR_INDICES, Counts::FLOOR_COUNT);
+    uploadVertsTextured(texFloorVAO, texFloorVBO, texFloorEBO, Verts::FLOOR_VERTS, Indices::FLOOR_INDICES);
+
     //---------------- End VAO-VBO-EBO------------------//
 
     GLuint cubeTex = loadTexture("textures/chess.jpg");
