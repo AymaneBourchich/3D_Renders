@@ -85,7 +85,7 @@ int main()
     glEnable(GL_POLYGON_OFFSET_LINE);
     glPolygonOffset(-1.0f, -1.0f);
 
-    //---------------- Begin VAO-VBO-EBO------------------//
+    //------------------------------------------------------------------------------------------------------//
 
     GLuint cubeVAO = 0, cubeVBO = 0, cubeEBO = 0;
     setupVAO(cubeVAO, cubeVBO, cubeEBO, Verts::CUBE_VERTS, Indices::CUBE_INDICES);
@@ -96,6 +96,9 @@ int main()
     GLuint eyeVAO = 0, eyeVBO = 0, eyeEBO = 0;
     setupVAO(headVAO, headVBO, headEBO, Verts::HEAD_VERTS, Indices::HEAD_INDICES);
 
+    GLuint triPrismVAO = 0, triPrismVBO = 0, triPrismEBO = 0;
+    setupVAO(triPrismVAO, triPrismVBO, triPrismEBO, Verts::TRI_PRISM_VERTS, Indices::TRI_PRISM_INDICES);
+
     GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
     setupVAOTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CUBE_VERTS_UV, Indices::CUBE_INDICES);
 
@@ -105,7 +108,7 @@ int main()
     GLuint texFloorVAO = 0, texFloorVBO = 0, texFloorEBO = 0;
     setupVAOTextured(texFloorVAO, texFloorVBO, texFloorEBO, Verts::FLOOR_VERTS, Indices::FLOOR_INDICES);
 
-    //---------------- End VAO-VBO-EBO------------------//
+    //-----------------------------------------------------------------------------------------------------------//
 
     GLuint cubeTex = loadTexture("textures/chess.jpg");
     GLuint floorTex = loadTexture("textures/floor.jpg");
@@ -114,9 +117,7 @@ int main()
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
     double lastTime = glfwGetTime();
-    //---------------- End VAO-VBO-EBO------------------//
-
-    //----------------------
+    //-------------------------------------------------------------------------------------------------------------------//
 
     while (!glfwWindowShouldClose(window))
     {
@@ -149,9 +150,9 @@ int main()
         scaleFully(floor, 100);
         drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FACE_COUNT, proj, view, floor);
 
-        glm::mat4 cube = initModel();
-        translate(cube, 0, 0.5, 0);
-        drawMesh(simpleProgram, cubeVAO, Counts::CUBE_COUNT, proj, view, cube);
+        glm::mat4 model = initModel();
+        scaleX(model, 3);
+        drawMesh(simpleProgram, triPrismVAO, Counts::TRI_PRISM_COUNT, proj, view, model);
 
         // ------End manual drawing loop--------------------//
         glfwSwapBuffers(window);

@@ -1,5 +1,6 @@
 #pragma once
 #include <cstddef>
+// Floor plane at y = 0
 
 template <typename T, size_t N>
 inline constexpr int getCount(const T (&)[N])
@@ -15,6 +16,30 @@ namespace Verts
         0.5f, 0.0f, -0.5f, 1.0f, 0.0f,
         0.5f, 0.0f, 0.5f, 1.0f, 1.0f,
         -0.5f, 0.0f, 0.5f, 0.0f, 1.0f
+
+    };
+
+    inline constexpr float TRI_PRISM_VERTS[] = {
+        // pos
+        0.0f,
+        0.0f,
+        0.0f,
+        0.0f,
+        0.0f,
+        -0.5f,
+        0.0f,
+        0.5f,
+        -0.25f,
+
+        0.5f,
+        0.0f,
+        0.0f,
+        0.5f,
+        0.0f,
+        -0.5f,
+        0.5f,
+        0.5f,
+        -0.25f,
 
     };
 
@@ -134,6 +159,14 @@ namespace Indices
         0, 1, 3,
         3, 1, 2};
 
+    inline constexpr unsigned int TRI_PRISM_INDICES[] = {
+        0, 1, 2,
+        3, 4, 5,
+        0, 2, 3,
+        2, 5, 3,
+        5, 2, 1,
+        1, 5, 4};
+
     inline constexpr unsigned int FACE_INDICES[] = {
         0, 1, 2,
         0, 4, 2,
@@ -205,4 +238,5 @@ namespace Counts
     inline constexpr int EYE_COUNT = getCount(Indices::EYE_INDICES);
     inline constexpr int FACE_COUNT = getCount(Indices::FACE_INDICES);
     inline constexpr int FLOOR_COUNT = getCount(Indices::FLOOR_INDICES);
+    inline constexpr int TRI_PRISM_COUNT = getCount(Indices::TRI_PRISM_INDICES);
 }
