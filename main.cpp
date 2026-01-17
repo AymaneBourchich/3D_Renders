@@ -144,11 +144,16 @@ int main()
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
+
         //------Begin Manual drawing loop--------------------//
 
         glm::mat4 floor = initModel();
         scaleFully(floor, 100);
-        drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FACE_COUNT, proj, view, floor);
+        setMVP(texProgram, floor, view, proj);
+        setAmbientColor(texProgram, Color::Red, 0.5);
+        setValue(texProgram, "uTex", 0);
+        
+        drawMeshTextured(texFloorVAO, floorTex, Counts::FACE_COUNT);
 
         glm::mat4 model = initModel();
         scaleX(model, 3);
