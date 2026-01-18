@@ -82,10 +82,21 @@ void setValue(GLuint program, const char *name, float value)
     GLint loc = glGetUniformLocation(program, name);
     glUniform1f(loc, value);
 }
-void setMVP(GLuint program, const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &proj)
+
+void setModel(GLuint program, const glm::mat4 &model)
 {
     glUseProgram(program);
-    setMat4(program, "uMVP", proj * view * model);
+    setMat4(program, "uModel", model);
+}
+void setView(GLuint program, const glm::mat4 &view)
+{
+    glUseProgram(program);
+    setMat4(program, "uView", view);
+}
+void setProj(GLuint program, const glm::mat4 &proj)
+{
+    glUseProgram(program);
+    setMat4(program, "uProj", proj);
 }
 void setAmbientColor(GLuint program, const glm::vec3 &color, float intensity)
 {

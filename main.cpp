@@ -144,22 +144,24 @@ int main()
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
-
-        //------Begin Manual drawing loop--------------------//
+        //-----------------------Shader setup----------------------------//
+        setAmbientColor(texProgram, Color::Red, 0.5);
+        setValue(texProgram, "uTex", 0);
+        setView(texProgram, view);
+        setProj(texProgram, proj);
+        setView(simpleProgram, view);
+        setProj(simpleProgram, proj);
+        //------------------------Main drawing loop----------------------------//
 
         glm::mat4 floor = initModel();
         scaleFully(floor, 100);
-        setMVP(texProgram, floor, view, proj);
-        setAmbientColor(texProgram, Color::Red, 0.5);
-        setValue(texProgram, "uTex", 0);
-        
-        drawMeshTextured(texFloorVAO, floorTex, Counts::FACE_COUNT);
+        drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FACE_COUNT, floor);
 
         glm::mat4 model = initModel();
         scaleX(model, 3);
-        drawMesh(simpleProgram, triPrismVAO, Counts::TRI_PRISM_COUNT, proj, view, model);
+        drawMesh(simpleProgram, triPrismVAO, Counts::TRI_PRISM_COUNT, model);
 
-        // ------End manual drawing loop--------------------//
+        // -------------------------------------------------------------//
         glfwSwapBuffers(window);
     }
 
