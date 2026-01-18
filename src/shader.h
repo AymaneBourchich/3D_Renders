@@ -14,3 +14,4 @@ void setAmbientColor(GLuint program, const glm::vec3 &color, float intensity);
 void setModel(GLuint program, const glm::mat4 &model);
 void setView(GLuint program, const glm::mat4 &view);
 void setProj(GLuint program, const glm::mat4 &proj);
+void setColor(GLuint program, const glm::vec3 &color);

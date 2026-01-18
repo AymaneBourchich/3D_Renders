@@ -104,3 +104,7 @@ void setAmbientColor(GLuint program, const glm::vec3 &color, float intensity)
     setVec3(program, "uAmbient", color);
     setValue(program, "uAmbientIntensity", intensity);
 }
+void setColor(GLuint program, const glm::vec3 &color)
+{
+    setVec3(program, "color", color);
+}

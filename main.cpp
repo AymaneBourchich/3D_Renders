@@ -65,6 +65,18 @@ static inline float updateRotation(float speedDegPerSec, float dt, float &angleD
         angleDeg -= 360.0f; // wrap around
     return angleDeg;
 }
+static inline float getIntensity(double now)
+{
+    float glow = 0.5f + 0.5f * sinf(float(now) * 4.0f);
+    return 0.5f + glow * 2.0f;
+}
+
+static inline void setUpTextureShader(GLuint program, glm::mat4 &view, glm::mat4 &proj)
+{
+    setValue(program, "uTex", 0);
+    setView(program, view);
+    setProj(program, proj);
+}
 
 int main()
 {
@@ -116,6 +128,7 @@ int main()
 
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
+    GLuint lightProgram = createProgram("shaders/light.vert", "shaders/light.frag");
     double lastTime = glfwGetTime();
     //-------------------------------------------------------------------------------------------------------------------//
 
@@ -145,21 +158,23 @@ int main()
 
         //-----------------------Shader setup----------------------------//
         setAmbientColor(texProgram, Color::RED, 0.3);
+        setAmbientColor(lightProgram, Color::RED, getIntensity(now));
         setValue(texProgram, "uTex", 0);
         setView(texProgram, view);
         setProj(texProgram, proj);
         setView(simpleProgram, view);
         setProj(simpleProgram, proj);
-        setVec3(simpleProgram, "color", Color::CYAN);
+        setView(lightProgram, view);
+        setProj(lightProgram, proj);
+        setColor(lightProgram, Color::WHITE);
         //------------------------Main drawing loop----------------------------//
-
         glm::mat4 floor = initModel();
         scaleFully(floor, 100);
         drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FACE_COUNT, floor);
 
         glm::mat4 model = initModel();
         scaleX(model, 3);
-        drawMesh(simpleProgram, triPrismVAO, Counts::TRI_PRISM_COUNT, model);
+        drawMesh(lightProgram, triPrismVAO, Counts::TRI_PRISM_COUNT, model);
         // -------------------------------------------------------------//
         glfwSwapBuffers(window);
     }
