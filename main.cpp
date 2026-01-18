@@ -71,7 +71,7 @@ static inline float getIntensity(double now)
     return 0.5f + glow * 2.0f;
 }
 
-static inline void setUpSimpleShader(GLuint program, glm::mat4 &view, glm::mat4 &proj,const glm::vec3 &color)
+static inline void setUpSimpleShader(GLuint program, glm::mat4 &view, glm::mat4 &proj, const glm::vec3 &color)
 {
     setView(program, view);
     setProj(program, proj);
@@ -107,24 +107,8 @@ int main()
     glPolygonOffset(-1.0f, -1.0f);
 
     //------------------------------------------------------------------------------------------------------//
-
-    GLuint cubeVAO = 0, cubeVBO = 0, cubeEBO = 0;
-    setupVAO(cubeVAO, cubeVBO, cubeEBO, Verts::CUBE_VERTS, Indices::CUBE_INDICES);
-
-    GLuint headVAO = 0, headVBO = 0, headEBO = 0;
-    setupVAO(headVAO, headVBO, headEBO, Verts::HEAD_VERTS, Indices::HEAD_INDICES);
-
-    GLuint eyeVAO = 0, eyeVBO = 0, eyeEBO = 0;
-    setupVAO(headVAO, headVBO, headEBO, Verts::HEAD_VERTS, Indices::HEAD_INDICES);
-
     GLuint triPrismVAO = 0, triPrismVBO = 0, triPrismEBO = 0;
     setupVAO(triPrismVAO, triPrismVBO, triPrismEBO, Verts::TRI_PRISM_VERTS, Indices::TRI_PRISM_INDICES);
-
-    GLuint texCubeVAO = 0, texCubeVBO = 0, texCubeEBO = 0;
-    setupVAOTextured(texCubeVAO, texCubeVBO, texCubeEBO, Verts::CUBE_VERTS_UV, Indices::CUBE_INDICES);
-
-    GLuint texFaceVAO = 0, texFaceVBO = 0, texFaceEBO = 0;
-    setupVAOTextured(texFaceVAO, texFaceVBO, texFaceEBO, Verts::FACE_VERTS, Indices::FACE_INDICES);
 
     GLuint texFloorVAO = 0, texFloorVBO = 0, texFloorEBO = 0;
     setupVAOTextured(texFloorVAO, texFloorVBO, texFloorEBO, Verts::FLOOR_VERTS, Indices::FLOOR_INDICES);
@@ -175,7 +159,7 @@ int main()
         //------------------------Main drawing loop----------------------------//
         glm::mat4 floor = initModel();
         scaleFully(floor, 100);
-        drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FACE_COUNT, floor);
+        drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FLOOR_COUNT, floor);
 
         glm::mat4 model = initModel();
         scaleX(model, 3);
