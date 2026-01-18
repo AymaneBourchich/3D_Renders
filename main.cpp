@@ -71,11 +71,20 @@ static inline float getIntensity(double now)
     return 0.5f + glow * 2.0f;
 }
 
-static inline void setUpTextureShader(GLuint program, glm::mat4 &view, glm::mat4 &proj)
+static inline void setUpSimpleShader(GLuint program, glm::mat4 &view, glm::mat4 &proj,const glm::vec3 &color)
+{
+    setView(program, view);
+    setProj(program, proj);
+    setColor(program, color);
+}
+
+static inline void setUpTextureShader(GLuint program, glm::mat4 &view, glm::mat4 &proj,
+                                      const glm::vec3 &color, float intensity)
 {
     setValue(program, "uTex", 0);
     setView(program, view);
     setProj(program, proj);
+    setAmbientColor(program, color, intensity);
 }
 
 int main()
@@ -157,13 +166,9 @@ int main()
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
         //-----------------------Shader setup----------------------------//
-        setAmbientColor(texProgram, Color::RED, 0.3);
         setAmbientColor(lightProgram, Color::RED, getIntensity(now));
-        setValue(texProgram, "uTex", 0);
-        setView(texProgram, view);
-        setProj(texProgram, proj);
-        setView(simpleProgram, view);
-        setProj(simpleProgram, proj);
+        setUpTextureShader(texProgram, view, proj, Color::RED, 0.3);
+        setUpSimpleShader(simpleProgram, view, proj, Color::MAGENTA);
         setView(lightProgram, view);
         setProj(lightProgram, proj);
         setColor(lightProgram, Color::WHITE);
