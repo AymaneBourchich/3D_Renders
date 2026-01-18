@@ -139,18 +139,18 @@ int main()
 
         glClearColor(0.5f, 0.5f, 0.5f, 0.7);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
         glm::vec3 fwd = camForward(gCam);
         glm::mat4 view = glm::lookAt(gCam.pos, gCam.pos + fwd, glm::vec3(0, 1, 0));
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
         //-----------------------Shader setup----------------------------//
-        setAmbientColor(texProgram, Color::Red, 0.5);
+        setAmbientColor(texProgram, Color::RED, 0.3);
         setValue(texProgram, "uTex", 0);
         setView(texProgram, view);
         setProj(texProgram, proj);
         setView(simpleProgram, view);
         setProj(simpleProgram, proj);
+        setVec3(simpleProgram, "color", Color::CYAN);
         //------------------------Main drawing loop----------------------------//
 
         glm::mat4 floor = initModel();
@@ -160,7 +160,6 @@ int main()
         glm::mat4 model = initModel();
         scaleX(model, 3);
         drawMesh(simpleProgram, triPrismVAO, Counts::TRI_PRISM_COUNT, model);
-
         // -------------------------------------------------------------//
         glfwSwapBuffers(window);
     }
