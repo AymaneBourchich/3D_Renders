@@ -113,6 +113,42 @@ int main()
     GLuint texFloorVAO = 0, texFloorVBO = 0, texFloorEBO = 0;
     setupVAOTextured(texFloorVAO, texFloorVBO, texFloorEBO, Verts::FLOOR_VERTS, Indices::FLOOR_INDICES);
 
+    GLuint cubeVAO, cubeVBO, cubeEBO;
+
+    glGenVertexArrays(1, &cubeVAO);
+    glGenBuffers(1, &cubeVBO);
+    glGenBuffers(1, &cubeEBO);
+
+    glBindVertexArray(cubeVAO);
+
+    // VBO
+    glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(Verts::CUBE_VERTS),
+                 Verts::CUBE_VERTS,
+                 GL_STATIC_DRAW);
+
+    // EBO
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                 sizeof(Indices::CUBE_INDICES),
+                 Indices::CUBE_INDICES,
+                 GL_STATIC_DRAW);
+
+    // position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+                          6 * sizeof(float),
+                          (void *)0);
+    glEnableVertexAttribArray(0);
+
+    // normal
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
+                          6 * sizeof(float),
+                          (void *)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    glBindVertexArray(0);
+
     //-----------------------------------------------------------------------------------------------------------//
 
     GLuint cubeTex = loadTexture("textures/chess.jpg");
@@ -122,6 +158,7 @@ int main()
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
     GLuint texProgram = createProgram("shaders/tex.vert", "shaders/tex.frag");
     GLuint lightProgram = createProgram("shaders/light.vert", "shaders/light.frag");
+    GLuint diffuseProgram = createProgram("shaders/diffuse.vert", "shaders/diffuse.frag");
     double lastTime = glfwGetTime();
     //-------------------------------------------------------------------------------------------------------------------//
 
@@ -153,12 +190,21 @@ int main()
         setUpTextureShader(texProgram, view, proj, Color::WHITE, 0.3);
         setUpSimpleShader(simpleProgram, view, proj, Color::MAGENTA);
 
+        setView(diffuseProgram, view);
+        setProj(diffuseProgram, proj);
+        setVec3(diffuseProgram, "uLightPos", glm::vec3(3.0f, 3.0f, 1.0f));
+        setVec3(diffuseProgram, "uLightColor", glm::vec3(1.0f));
+        setVec3(diffuseProgram, "uObjectColor", glm::vec3(1.0f, 0.5f, 0.2f));
+        setValue(diffuseProgram, "uAmbient", 0.2f);
+
         //------------------------Main drawing loop----------------------------//
         glm::mat4 floor = initModel();
         scaleFully(floor, 100);
         drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FLOOR_COUNT, floor);
 
-
+        glm::mat4 cube = initModel();
+        translate(cube, 0, 1, 0);
+        drawMesh(diffuseProgram, cubeVAO, Counts::CUBE_COUNT, cube);
 
         // -------------------------------------------------------------//
         glfwSwapBuffers(window);
