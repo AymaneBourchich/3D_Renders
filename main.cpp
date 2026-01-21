@@ -116,7 +116,7 @@ int main()
     //-----------------------------------------------------------------------------------------------------------//
 
     GLuint cubeTex = loadTexture("textures/chess.jpg");
-    GLuint floorTex = loadTexture("textures/floor.jpg");
+    GLuint floorTex = loadTexture("textures/hex-floor.jpg");
     GLuint robotTex = loadTexture("textures/circuit.jpg");
 
     GLuint simpleProgram = createProgram("shaders/simple.vert", "shaders/simple.frag");
@@ -150,20 +150,16 @@ int main()
         glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(gFbW) / float(gFbH), 0.1f, 100.0f);
 
         //-----------------------Shader setup----------------------------//
-        setAmbientColor(lightProgram, Color::RED, getIntensity(now));
-        setUpTextureShader(texProgram, view, proj, Color::RED, 0.3);
+        setUpTextureShader(texProgram, view, proj, Color::WHITE, 0.3);
         setUpSimpleShader(simpleProgram, view, proj, Color::MAGENTA);
-        setView(lightProgram, view);
-        setProj(lightProgram, proj);
-        setColor(lightProgram, Color::WHITE);
+
         //------------------------Main drawing loop----------------------------//
         glm::mat4 floor = initModel();
         scaleFully(floor, 100);
         drawMeshTextured(texProgram, texFloorVAO, floorTex, Counts::FLOOR_COUNT, floor);
 
-        glm::mat4 model = initModel();
-        scaleX(model, 3);
-        drawMesh(lightProgram, triPrismVAO, Counts::TRI_PRISM_COUNT, model);
+
+
         // -------------------------------------------------------------//
         glfwSwapBuffers(window);
     }
